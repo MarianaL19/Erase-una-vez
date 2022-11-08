@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu_Niveles.unity
     guid: ecfbed896e7a43845b56b5d04c58bc3b
+  - enabled: 1
+    path: Assets/Scenes/Visualizar_Nivel.unity
+    guid: bf44b902fc8dc354c90e5ca0492257d3
   m_configObjects: {}

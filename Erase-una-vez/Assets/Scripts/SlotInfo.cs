@@ -21,8 +21,12 @@ public class SlotInfo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        inicializarSlot();
+    }
+
+    public void inicializarSlot()
+    {
         //Se inicializa como si el nivel SÍ ESTUVIERA bloqueado
-        // bloqueo.gameObject.SetActive(true);
         interactividad.interactable = false;
         objEstrellas.gameObject.SetActive(false);
 
@@ -45,8 +49,8 @@ public class SlotInfo : MonoBehaviour
                 estrella3.gameObject.SetActive(false);
             }
         }
-
     }
+
 
     public void CargarNivel()
     {
