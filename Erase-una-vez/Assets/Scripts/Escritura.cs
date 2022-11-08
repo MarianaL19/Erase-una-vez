@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class Escritura : MonoBehaviour
 {
@@ -16,9 +15,17 @@ public class Escritura : MonoBehaviour
     private int aciertos;
     private int errores;
     private bool red;
+    private string[] colorLetra = new string[3];
+
+    public Configuracion configuracion;
 
     void Start()
     {
+        colorLetra = configuracion.getColorLetra();
+        wordOutput.fontSize = configuracion.getTamanioLetra();
+        textoPasado.fontSize = configuracion.getTamanioLetra();
+
+
         SetPalabraActual();
         aciertos = 0;
         errores = 0;
@@ -36,8 +43,9 @@ public class Escritura : MonoBehaviour
 
     private void SetPalabraRestante(string palabraActualizada, string palabraAntigua)
     {
-        palabraRestante = palabraActualizada;
-        wordOutput.text = palabraRestante;
+        palabraRestante =  palabraActualizada;
+        string palabraMostrar = "<color=\"" + colorLetra[0] + "\">" + palabraActualizada + "</color>";
+        wordOutput.text = palabraMostrar;
 
         palabraPasada = palabraAntigua;
         textoPasado.text = palabraPasada;
@@ -45,6 +53,11 @@ public class Escritura : MonoBehaviour
 
     private void Update()
     {
+        wordOutput.fontSize = configuracion.getTamanioLetra();
+        textoPasado.fontSize = configuracion.getTamanioLetra();
+
+        colorLetra = configuracion.getColorLetra();
+
         if (Input.anyKeyDown)
         {
             string keysPressed = Input.inputString;
@@ -77,9 +90,10 @@ public class Escritura : MonoBehaviour
     private void QuitarLetra()
     {
         if(red)
-            palabraPasada +=  "<color=\"red\">" + palabraRestante.Substring(0, 1) + "</color>";
+            palabraPasada += "<color=\"" + colorLetra[1] + "\">" + palabraRestante.Substring(0, 1) + "</color>";
+            //"<color=\"" + colorLetra[0] + "\">" + palabraActualizada + "</color>";
         else
-            palabraPasada += "<color=\"green\">" + palabraRestante.Substring(0, 1) + "</color>";
+            palabraPasada += "<color=\"" + colorLetra[2] + "\">" + palabraRestante.Substring(0, 1) + "</color>";
 
         string newString = palabraRestante.Remove(0, 1);
 
