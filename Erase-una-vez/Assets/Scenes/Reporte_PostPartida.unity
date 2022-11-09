@@ -280,8 +280,8 @@ MonoBehaviour:
   segundos: 0
   totalPalabras: 150
   palXMin: 0
-  tiempoOutput: {fileID: 0}
   precisionOutput: {fileID: 0}
+  tiempoOutput: {fileID: 0}
   palXMinOutout: {fileID: 0}
 --- !u!1 &218699025
 GameObject:
@@ -562,8 +562,8 @@ MonoBehaviour:
   segundos: 0
   totalPalabras: 150
   palXMin: 0
-  tiempoOutput: {fileID: 0}
   precisionOutput: {fileID: 0}
+  tiempoOutput: {fileID: 0}
   palXMinOutout: {fileID: 0}
 --- !u!1 &618552352
 GameObject:
@@ -722,8 +722,8 @@ MonoBehaviour:
   segundos: 0
   totalPalabras: 150
   palXMin: 0
-  tiempoOutput: {fileID: 0}
   precisionOutput: {fileID: 0}
+  tiempoOutput: {fileID: 0}
   palXMinOutout: {fileID: 0}
 --- !u!1 &672157855
 GameObject:
@@ -1829,6 +1829,7 @@ GameObject:
   - component: {fileID: 1994609475}
   - component: {fileID: 1994609477}
   - component: {fileID: 1994609476}
+  - component: {fileID: 1994609478}
   m_Layer: 5
   m_Name: Panel (1)
   m_TagString: Untagged
@@ -1894,6 +1895,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994609474}
   m_CullTransparentMesh: 1
+--- !u!114 &1994609478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994609474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad33808e0f3964e4091c9f86f7088bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aciertos: 558
+  errores: 126
+  precision: 0
+  totalCaracteres: 684
+  tiempoS: 125.2654
+  minuto: 0
+  segundos: 0
+  totalPalabras: 150
+  palXMin: 0
+  precisionOutput: {fileID: 618552354}
+  tiempoOutput: {fileID: 78289331}
+  palXMinOutout: {fileID: 369424893}
 --- !u!1 &2126562710
 GameObject:
   m_ObjectHideFlags: 0
