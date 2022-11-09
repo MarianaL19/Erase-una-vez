@@ -19,6 +19,12 @@ public class Reporte : MonoBehaviour
 
     //Nombres y variables provisionales
 
+    //Para cambio de botonoes
+    public bool prePartida = false;
+
+    [SerializeField] private GameObject objPre;
+    [SerializeField] private GameObject objPost;
+
     //Para Precision
 
     //Cantidad de aciertos por caracter
@@ -64,12 +70,28 @@ public class Reporte : MonoBehaviour
         Debug.Log("tTotal");
         PalabraXMinuto();
         Debug.Log("pxm");
+        if(prePartida == true)
+        {
+            objPre.gameObject.SetActive(true);
+            objPost.gameObject.SetActive(false);
+        }
+        else
+        {
+            objPre.gameObject.SetActive(false);
+            objPost.gameObject.SetActive(true);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void VersionReporte()
+    {
+        //Funcion para ver que version del reporte se va a visualizar
+
     }
 
     public void Precision()
