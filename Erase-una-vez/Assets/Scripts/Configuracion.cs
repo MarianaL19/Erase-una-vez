@@ -35,6 +35,9 @@ public class Configuracion : MonoBehaviour
     void Update()
     {
         audioSource.volume = volumen;
+        sliderVolumen.value = volumen;
+        sliderSizeText.value = tamLetra;
+        dropColores.value = colorSet;
 
     }
 
@@ -96,6 +99,7 @@ public class Configuracion : MonoBehaviour
         tamLetra = (int)newTamLetra;
         PlayerPrefs.SetInt("SizeTexto", tamLetra);
         PlayerPrefs.Save();
+        Debug.Log("Sirve esta madre");
     }
 
     public void cambiarVolumen(float newVolumen)
@@ -107,7 +111,6 @@ public class Configuracion : MonoBehaviour
 
     public void cambiarColorTexto(int newColorSet)
     {
-
         colorSet = newColorSet;
         PlayerPrefs.SetInt("SetColor", colorSet);
         PlayerPrefs.Save();
@@ -116,5 +119,23 @@ public class Configuracion : MonoBehaviour
     public void salirAjustes()
     {
         ajustes.enabled = false;
+    }
+
+    public void subirVolumen()
+    {
+        volumen += .1f;
+    }
+    public void bajarVolumen()
+    {
+        volumen -= .1f;
+    }
+
+    public void aumentarFuente()
+    {
+        tamLetra += 10;
+    }
+    public void reducirFuente()
+    {
+        tamLetra -= 10;
     }
 }
