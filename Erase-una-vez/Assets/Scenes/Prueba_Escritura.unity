@@ -721,11 +721,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799254329952267411, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -227.2173
+      value: -205.5638
       objectReference: {fileID: 0}
     - target: {fileID: 799254329952267411, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000005722
+      value: 10.8267
       objectReference: {fileID: 0}
     - target: {fileID: 799254329952267411, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -818,6 +818,10 @@ PrefabInstance:
     - target: {fileID: 799254331041374722, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_Name
       value: Ajustes
+      objectReference: {fileID: 0}
+    - target: {fileID: 799254331041374722, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 799254331041374733, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: audioSource

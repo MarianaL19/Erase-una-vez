@@ -25,11 +25,7 @@ public class Escritura : MonoBehaviour
         wordOutput.fontSize = configuracion.getTamanioLetra();
         textoPasado.fontSize = configuracion.getTamanioLetra();
 
-
         SetPalabraActual();
-        aciertos = 0;
-        errores = 0;
-
     }
     private void SetPalabraActual()
     {
@@ -43,6 +39,7 @@ public class Escritura : MonoBehaviour
 
     private void SetPalabraRestante(string palabraActualizada, string palabraAntigua)
     {
+        //Aquí actualizamos lo que se muestra en cada text 
         palabraRestante =  palabraActualizada;
         string palabraMostrar = "<color=\"" + colorLetra[0] + "\">" + palabraActualizada + "</color>";
         wordOutput.text = palabraMostrar;
@@ -53,9 +50,9 @@ public class Escritura : MonoBehaviour
 
     private void Update()
     {
+        //Leemos en cada frame los valores de configuración para detectar cambios
         wordOutput.fontSize = configuracion.getTamanioLetra();
         textoPasado.fontSize = configuracion.getTamanioLetra();
-
         colorLetra = configuracion.getColorLetra();
 
         if (Input.anyKeyDown)
@@ -96,7 +93,6 @@ public class Escritura : MonoBehaviour
             palabraPasada += "<color=\"" + colorLetra[2] + "\">" + palabraRestante.Substring(0, 1) + "</color>";
 
         string newString = palabraRestante.Remove(0, 1);
-
         SetPalabraRestante(newString, palabraPasada);
     }
 

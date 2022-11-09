@@ -18,12 +18,14 @@ public class Configuracion : MonoBehaviour
     [SerializeField] private TMP_Dropdown dropColores;
     [SerializeField] private Canvas ajustes;
 
+    [SerializeField] private Text textoPrueba;
+
 
     void Start()
     {
-        colorSet = PlayerPrefs.GetInt("SetColor");
-        tamLetra = PlayerPrefs.GetInt("SizeTexto");
-        volumen = PlayerPrefs.GetFloat("Volumen");
+        colorSet = PlayerPrefs.GetInt("setColor");
+        tamLetra = PlayerPrefs.GetInt("sizeTexto");
+        volumen = PlayerPrefs.GetFloat("volumen");
 
         sliderVolumen.value = volumen;
         sliderSizeText.value = tamLetra;
@@ -38,6 +40,8 @@ public class Configuracion : MonoBehaviour
         sliderVolumen.value = volumen;
         sliderSizeText.value = tamLetra;
         dropColores.value = colorSet;
+
+        textoPrueba.fontSize = tamLetra;
 
     }
 
@@ -97,22 +101,21 @@ public class Configuracion : MonoBehaviour
     public void cambiarTamanioLetra(float newTamLetra)
     {
         tamLetra = (int)newTamLetra;
-        PlayerPrefs.SetInt("SizeTexto", tamLetra);
+        PlayerPrefs.SetInt("sizeTexto", tamLetra);
         PlayerPrefs.Save();
-        Debug.Log("Sirve esta madre");
     }
 
     public void cambiarVolumen(float newVolumen)
     {
         volumen = newVolumen;
-        PlayerPrefs.SetFloat("Volumen", volumen);
+        PlayerPrefs.SetFloat("volumen", volumen);
         PlayerPrefs.Save();
     }
 
     public void cambiarColorTexto(int newColorSet)
     {
         colorSet = newColorSet;
-        PlayerPrefs.SetInt("SetColor", colorSet);
+        PlayerPrefs.SetInt("setColor", colorSet);
         PlayerPrefs.Save();
     }
 
