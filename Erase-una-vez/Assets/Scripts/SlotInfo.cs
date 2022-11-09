@@ -54,7 +54,7 @@ public class SlotInfo : MonoBehaviour
 
     public void CargarNivel()
     {
-        SceneManager.LoadScene(noNivel);
+        SceneManager.LoadScene("Visualizar_Nivel");
     }
     
 }
