@@ -7,20 +7,32 @@ using UnityEngine.SceneManagement;
 
 public class VisualizarNivel : MonoBehaviour
 {
+    //Objetos que se utilizan para mostrar el conjunto de nivel: bloqueado o desbloqueado
     [SerializeField] private GameObject objBloqueado;
     [SerializeField] private GameObject objDesbloqueado;
+
+    //Objetos del nivel desbloqueado
     [SerializeField] private GameObject objEstrellas;
     [SerializeField] private GameObject[] estrellas;
-    [SerializeField] private Text tituloNivel;
+    [SerializeField] private GameObject botones;
+    [SerializeField] private GameObject objBloquearAudio;
 
+    //Objetos comunes de la visualización
+    [SerializeField] private Text tituloNivel;
+    [SerializeField] private Button btnTexto;
+    [SerializeField] private Button btnAudio;
+
+    //Variables para asignar los valores del Archivo Lógico del nivel
     public int noNivel;
     public int noEstrellas;
     public bool bloqueado;
+    public bool bloqueadoAudio;
     public bool varianteAudio;
 
     // Start is called before the first frame update
     void Start()
     {
+        // cargarDatos();
         inicializarNivel();
     }
 
@@ -39,8 +51,28 @@ public class VisualizarNivel : MonoBehaviour
         //Si el nivel seleccionado está bloqueado
         if(bloqueado == true){
             objDesbloqueado.gameObject.SetActive(false);
-        }else{
+            btnTexto.interactable = false;
+            btnAudio.interactable = false;
+        }
+        //Si está desbloqueado y no está en el modo de la variante audio
+        else if(bloqueado == false && varianteAudio == false){
             objBloqueado.gameObject.SetActive(false);
+            objDesbloqueado.gameObject.SetActive(true);
+            
+            objBloquearAudio.gameObject.SetActive(false);
+            botones.gameObject.SetActive(true);
+            btnTexto.interactable = true;
+            btnAudio.interactable = true;
+        }
+        //Está desbloqueado y está en la variante audio
+        else if(bloqueado == false && varianteAudio == true){
+            if(bloqueadoAudio == true)
+            {
+                objBloquearAudio.gameObject.SetActive(true);
+                botones.gameObject.SetActive(false);
+            }else{
+                botones.gameObject.SetActive(true);
+            }
         }
 
         inicializarInfo();
@@ -52,6 +84,7 @@ public class VisualizarNivel : MonoBehaviour
 
         //Si no es una variante de audio, se muestran las estrellas
         if(varianteAudio == false){
+            // botones.gameObject.SetActive(true);
             objEstrellas.gameObject.SetActive(true);
 
             if (noEstrellas == 0){
@@ -67,13 +100,25 @@ public class VisualizarNivel : MonoBehaviour
         }
     }
 
-    public void cambiarAudio()
+    public void cambiarAAudio()
     {
-        varianteAudio = !varianteAudio;
-        print(varianteAudio.ToString());
-        // SceneManager.LoadScene("Visualizar_Nivel");
-        // SceneManager.LoadScene(3);
+        varianteAudio = true;
+    }
 
+    public void cambiarATexto()
+    {
+        varianteAudio = false;
+    }
+
+    public void comprarNivelTexto()
+    {
+        bloqueado = false;
+    }
+
+    public void comprarNivelAudio()
+    {
+        bloqueadoAudio = false;
+        objBloquearAudio.gameObject.SetActive(false);
     }
 
 }
