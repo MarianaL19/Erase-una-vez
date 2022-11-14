@@ -268,7 +268,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 799254329796698369, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.47
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 799254329796698369, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_AnchorMax.y
@@ -276,11 +276,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799254329796698369, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.47
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 799254329909621492, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.47
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 799254329909621492, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_AnchorMax.y
@@ -297,6 +297,10 @@ PrefabInstance:
     - target: {fileID: 799254329952267411, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 799254330435105388, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
+      propertyPath: m_Value
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 799254331041374721, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_Pivot.x
@@ -524,8 +528,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -266.9784, y: -221.48274}
-  m_SizeDelta: {x: -606.9246, y: -464.1851}
+  m_AnchoredPosition: {x: 3.0999756, y: -220.89001}
+  m_SizeDelta: {x: -138.35, y: -464.1851}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &786216670
 PrefabInstance:
@@ -593,6 +597,10 @@ PrefabInstance:
     - target: {fileID: 4735678628712400325, guid: 176f02f6160852640b17438e086f4633, type: 3}
       propertyPath: m_Name
       value: Pantalla_Victoria
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735678628712400325, guid: 176f02f6160852640b17438e086f4633, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4735678629605446614, guid: 176f02f6160852640b17438e086f4633, type: 3}
       propertyPath: estrellas.Array.data[0]
@@ -826,7 +834,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5669260540d08a74da8c03a59905476b, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.245
+  m_Volume: 0
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -973,16 +981,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1291860500}
-        m_TargetAssemblyTypeName: BotonesMenu, Assembly-CSharp
-        m_MethodName: irAjustes
-        m_Mode: 1
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ChangeSceneWithButton, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Ajustes
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1198665090
@@ -1282,8 +1290,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 287.96725, y: -220.64978}
-  m_SizeDelta: {x: -642.2354, y: -462.7242}
+  m_AnchoredPosition: {x: 3.440796, y: -221.62}
+  m_SizeDelta: {x: -137.6683, y: -462.7242}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1996393545
 CanvasRenderer:
@@ -1320,7 +1328,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 100
-    m_Alignment: 5
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
