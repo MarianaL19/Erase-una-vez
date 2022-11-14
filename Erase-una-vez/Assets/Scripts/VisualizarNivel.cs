@@ -11,6 +11,9 @@ public class VisualizarNivel : MonoBehaviour
     [SerializeField] private GameObject objBloqueado;
     [SerializeField] private GameObject objDesbloqueado;
 
+    //Objeto Pop-up
+    [SerializeField] private Canvas popUpCompra;
+
     //Objetos del nivel desbloqueado
     [SerializeField] private GameObject objEstrellas;
     [SerializeField] private GameObject[] estrellas;
@@ -38,6 +41,7 @@ public class VisualizarNivel : MonoBehaviour
     {
         // cargarDatos();
         inicializarNivel();
+        popUpCompra.enabled = false;
     }
 
     void Update(){
@@ -47,6 +51,11 @@ public class VisualizarNivel : MonoBehaviour
     public void cargarDatos()
     {
         //Se cargan todos los datos de las PlayerPrefs
+    }
+
+    public void guardarDatos()
+    {
+        //Se guardan todos los datos en playerPrefs cuando se destruya la escena
     }
 
     public void inicializarNivel()
@@ -121,7 +130,13 @@ public class VisualizarNivel : MonoBehaviour
 
     public void comprarNivelTexto()
     {
-        bloqueado = false;
+        if(estrellasTotales >= 2){
+            print(estrellasTotales);
+            estrellasTotales = estrellasTotales - 2;
+            bloqueado = false;
+        }else{
+            popUpCompra.enabled = true;
+        }
     }
 
     public void comprarNivelAudio()
@@ -131,7 +146,14 @@ public class VisualizarNivel : MonoBehaviour
             estrellasTotales = estrellasTotales - 2;
             bloqueadoAudio = false;
             objBloquearAudio.gameObject.SetActive(false);
+        }else{
+            popUpCompra.enabled = true;
         }
+    }
+
+    public void cerrarPopUpCompra()
+    {
+        popUpCompra.enabled = false;
     }
 
 }
