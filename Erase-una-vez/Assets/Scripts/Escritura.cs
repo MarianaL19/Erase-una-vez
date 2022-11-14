@@ -12,14 +12,10 @@ public class Escritura : MonoBehaviour
     private const int MAX_ERRORES_SEGUIDOS = 6;
 
     private string palabraRestante = string.Empty;
-<<<<<<< Updated upstream
     //hay que poner todo el texto en minusculas porque todos los inputs se leen asï¿½
     private string palabraActual = "abcdfg";
-=======
     //hay que poner todo el texto en minusculas porque todos los inputs se leen así
-    private string palabraActual = "prueba texto";
     //Hay que guardar en una variable el texto que vayamos escribiendo
->>>>>>> Stashed changes
     private string palabraPasada = string.Empty;
 
     //variables para guardar aciertos, y contar errores y cambiar el color del texto  
@@ -69,11 +65,8 @@ public class Escritura : MonoBehaviour
 
     private void Update()
     {
-<<<<<<< Updated upstream
         //Leemos en cada frame los valores de configuraciï¿½n para detectar cambios
-=======
-        //Leemos los valores de configuración para detectar cambios
->>>>>>> Stashed changes
+        //Leemos los valores de configuración para detectar 
         wordOutput.fontSize = configuracion.getTamanioLetra();
         textoPasado.fontSize = configuracion.getTamanioLetra();
         colorLetra = configuracion.getColorLetra();
