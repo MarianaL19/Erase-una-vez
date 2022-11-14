@@ -92,14 +92,13 @@ MonoBehaviour:
   prePartida: 1
   objPre: {fileID: 292479442748861100}
   objPost: {fileID: 292479442558891826}
-  aciertos: 558
-  errores: 126
+  caracteresCorrectos: 452
   precision: 0
   totalCaracteres: 684
-  tiempoS: 125.2654
+  tiempo: 192.2654
   minuto: 0
   segundos: 0
-  totalPalabras: 150
+  totalPalabras: 123
   palXMin: 0
   precisionOutput: {fileID: 292479442065232508}
   tiempoOutput: {fileID: 292479442596648941}
@@ -1249,11 +1248,10 @@ MonoBehaviour:
   prePartida: 0
   objPre: {fileID: 0}
   objPost: {fileID: 0}
-  aciertos: 558
-  errores: 126
+  caracteresCorrectos: 558
   precision: 0
   totalCaracteres: 684
-  tiempoS: 125.2654
+  tiempo: 125.2654
   minuto: 0
   segundos: 0
   totalPalabras: 150
@@ -1655,11 +1653,10 @@ MonoBehaviour:
   prePartida: 0
   objPre: {fileID: 0}
   objPost: {fileID: 0}
-  aciertos: 558
-  errores: 126
+  caracteresCorrectos: 558
   precision: 0
   totalCaracteres: 684
-  tiempoS: 125.2654
+  tiempo: 125.2654
   minuto: 0
   segundos: 0
   totalPalabras: 150
@@ -2028,11 +2025,10 @@ MonoBehaviour:
   prePartida: 0
   objPre: {fileID: 0}
   objPost: {fileID: 0}
-  aciertos: 558
-  errores: 126
+  caracteresCorrectos: 558
   precision: 0
   totalCaracteres: 684
-  tiempoS: 125.2654
+  tiempo: 125.2654
   minuto: 0
   segundos: 0
   totalPalabras: 150

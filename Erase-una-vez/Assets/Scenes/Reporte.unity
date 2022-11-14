@@ -388,6 +388,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 854946889}
     m_Modifications:
+    - target: {fileID: 292479441292631320, guid: 42bf1f7aedb876944961bf2ee2adce81, type: 3}
+      propertyPath: tiempo
+      value: 125.2654
+      objectReference: {fileID: 0}
+    - target: {fileID: 292479441292631320, guid: 42bf1f7aedb876944961bf2ee2adce81, type: 3}
+      propertyPath: totalPalabras
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 292479441292631320, guid: 42bf1f7aedb876944961bf2ee2adce81, type: 3}
+      propertyPath: caracteresCorrectos
+      value: 558
+      objectReference: {fileID: 0}
     - target: {fileID: 292479442841406426, guid: 42bf1f7aedb876944961bf2ee2adce81, type: 3}
       propertyPath: m_RootOrder
       value: 0
