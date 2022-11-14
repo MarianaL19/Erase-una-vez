@@ -9,8 +9,8 @@ public class Escritura : MonoBehaviour
     public Text textoPasado = null;
 
     private string palabraRestante = string.Empty;
-    //hay que poner todo el texto en minusculas porque todos los inputs se leen así
-    private string palabraActual = "prueba texto";
+    //hay que poner todo el texto en minusculas porque todos los inputs se leen asï¿½
+    private string palabraActual = "abcdfg";
     private string palabraPasada = string.Empty;
     private int aciertos;
     private int errores;
@@ -18,6 +18,7 @@ public class Escritura : MonoBehaviour
     private string[] colorLetra = new string[3];
 
     public Configuracion configuracion;
+    public PanelesNivel panelesNivel;
 
     void Start()
     {
@@ -39,7 +40,7 @@ public class Escritura : MonoBehaviour
 
     private void SetPalabraRestante(string palabraActualizada, string palabraAntigua)
     {
-        //Aquí actualizamos lo que se muestra en cada text 
+        //Aquï¿½ actualizamos lo que se muestra en cada text 
         palabraRestante =  palabraActualizada;
         string palabraMostrar = "<color=\"" + colorLetra[0] + "\">" + palabraActualizada + "</color>";
         wordOutput.text = palabraMostrar;
@@ -50,7 +51,7 @@ public class Escritura : MonoBehaviour
 
     private void Update()
     {
-        //Leemos en cada frame los valores de configuración para detectar cambios
+        //Leemos en cada frame los valores de configuraciï¿½n para detectar cambios
         wordOutput.fontSize = configuracion.getTamanioLetra();
         textoPasado.fontSize = configuracion.getTamanioLetra();
         colorLetra = configuracion.getColorLetra();
@@ -80,8 +81,11 @@ public class Escritura : MonoBehaviour
             errores++;
         }
         QuitarLetra();
-        if (palabraRestante.Length == 0)
+        if (palabraRestante.Length == 0){
             SetPalabraActual();
+            panelesNivel.activarPanel();
+        }
+            
     }
 
     private void QuitarLetra()

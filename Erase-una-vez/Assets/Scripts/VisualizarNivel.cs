@@ -16,9 +16,11 @@ public class VisualizarNivel : MonoBehaviour
     [SerializeField] private GameObject[] estrellas;
     [SerializeField] private GameObject botones;
     [SerializeField] private GameObject objBloquearAudio;
+    [SerializeField] private GameObject objMedalla;
 
     //Objetos comunes de la visualización
     [SerializeField] private Text tituloNivel;
+    [SerializeField] private Text tituloEstrellas;
     [SerializeField] private Button btnTexto;
     [SerializeField] private Button btnAudio;
 
@@ -28,6 +30,8 @@ public class VisualizarNivel : MonoBehaviour
     public bool bloqueado;
     public bool bloqueadoAudio;
     public bool varianteAudio;
+    public bool audioCompletado;
+    public int estrellasTotales;
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +51,10 @@ public class VisualizarNivel : MonoBehaviour
 
     public void inicializarNivel()
     {
+        tituloEstrellas.text = estrellasTotales.ToString();
         objEstrellas.gameObject.SetActive(false);
+        objMedalla.gameObject.SetActive(false);
+
         //Si el nivel seleccionado está bloqueado
         if(bloqueado == true){
             objDesbloqueado.gameObject.SetActive(false);
@@ -72,6 +79,7 @@ public class VisualizarNivel : MonoBehaviour
                 botones.gameObject.SetActive(false);
             }else{
                 botones.gameObject.SetActive(true);
+                if(audioCompletado) objMedalla.gameObject.SetActive(true);
             }
         }
 
@@ -108,6 +116,7 @@ public class VisualizarNivel : MonoBehaviour
     public void cambiarATexto()
     {
         varianteAudio = false;
+        // objMedalla.gameObject.SetActive(true);
     }
 
     public void comprarNivelTexto()
@@ -117,8 +126,12 @@ public class VisualizarNivel : MonoBehaviour
 
     public void comprarNivelAudio()
     {
-        bloqueadoAudio = false;
-        objBloquearAudio.gameObject.SetActive(false);
+        if(estrellasTotales >= 2){
+            print(estrellasTotales);
+            estrellasTotales = estrellasTotales - 2;
+            bloqueadoAudio = false;
+            objBloquearAudio.gameObject.SetActive(false);
+        }
     }
 
 }
