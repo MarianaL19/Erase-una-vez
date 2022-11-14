@@ -5,26 +5,44 @@ using UnityEngine.UI;
 
 public class Escritura : MonoBehaviour
 {
+    //Salidas de texto de unity, una para tener el texto normal y otra para guardar las letras que ya pasaron
     public Text wordOutput = null;
     public Text textoPasado = null;
 
+    private const int MAX_ERRORES_SEGUIDOS = 6;
+
     private string palabraRestante = string.Empty;
+<<<<<<< Updated upstream
     //hay que poner todo el texto en minusculas porque todos los inputs se leen asï¿½
     private string palabraActual = "abcdfg";
+=======
+    //hay que poner todo el texto en minusculas porque todos los inputs se leen así
+    private string palabraActual = "prueba texto";
+    //Hay que guardar en una variable el texto que vayamos escribiendo
+>>>>>>> Stashed changes
     private string palabraPasada = string.Empty;
+
+    //variables para guardar aciertos, y contar errores y cambiar el color del texto  
     private int aciertos;
     private int errores;
-    private bool red;
+    private int erroresSeguidos;
+    private bool errorActual;
+
+    //Guardamos los colores que se usan para el texto normal, aciertos y errores
     private string[] colorLetra = new string[3];
 
+    //Accedemos al script de configuración para leer datos de él
     public Configuracion configuracion;
     public PanelesNivel panelesNivel;
 
     void Start()
     {
+        //leemos de configuracion el color de la letra y el tamaño del texto
         colorLetra = configuracion.getColorLetra();
         wordOutput.fontSize = configuracion.getTamanioLetra();
         textoPasado.fontSize = configuracion.getTamanioLetra();
+
+        erroresSeguidos = 0;
 
         SetPalabraActual();
     }
@@ -51,33 +69,41 @@ public class Escritura : MonoBehaviour
 
     private void Update()
     {
+<<<<<<< Updated upstream
         //Leemos en cada frame los valores de configuraciï¿½n para detectar cambios
+=======
+        //Leemos los valores de configuración para detectar cambios
+>>>>>>> Stashed changes
         wordOutput.fontSize = configuracion.getTamanioLetra();
         textoPasado.fontSize = configuracion.getTamanioLetra();
         colorLetra = configuracion.getColorLetra();
 
+        //Aquí habría una función para reiniciar el nivel si se superan los errores seguidos
+        if(erroresSeguidos > MAX_ERRORES_SEGUIDOS)
+        {
+            Debug.Log("Perdiste al chile");
+        }
+
         if (Input.anyKeyDown)
         {
             string keysPressed = Input.inputString;
-
             if (keysPressed.Length == 1)
             {
                 CompararCaracter(keysPressed);
             }
         }
-
     }
 
     private void CompararCaracter(string typedLetter)
     {
         if (palabraRestante.IndexOf(typedLetter) == 0)
         {
-            red = false;
+            errorActual = false;
             aciertos++;
         }
         else
         {
-            red = true;
+            errorActual = true;
             errores++;
         }
         QuitarLetra();
@@ -90,11 +116,19 @@ public class Escritura : MonoBehaviour
 
     private void QuitarLetra()
     {
-        if(red)
+        if (errorActual)
+        {
+            erroresSeguidos++;
+            Debug.Log(erroresSeguidos);
             palabraPasada += "<color=\"" + colorLetra[1] + "\">" + palabraRestante.Substring(0, 1) + "</color>";
             //"<color=\"" + colorLetra[0] + "\">" + palabraActualizada + "</color>";
+        }
         else
+        {
+            erroresSeguidos = 0;
+            Debug.Log(erroresSeguidos);
             palabraPasada += "<color=\"" + colorLetra[2] + "\">" + palabraRestante.Substring(0, 1) + "</color>";
+        }
 
         string newString = palabraRestante.Remove(0, 1);
         SetPalabraRestante(newString, palabraPasada);
