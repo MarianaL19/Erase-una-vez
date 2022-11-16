@@ -9,11 +9,11 @@ public class Escritura : MonoBehaviour
     public Text wordOutput = null;
     public Text textoPasado = null;
 
-    private const int MAX_ERRORES_SEGUIDOS = 6;
+    private const int MAX_ERRORES_SEGUIDOS = 20;
 
     private string palabraRestante = string.Empty;
     //hay que poner todo el texto en minusculas porque todos los inputs se leen asï¿½
-    private string palabraActual = "abcdfg";
+    private string palabraActual;
     //hay que poner todo el texto en minusculas porque todos los inputs se leen así
     //Hay que guardar en una variable el texto que vayamos escribiendo
     private string palabraPasada = string.Empty;
@@ -26,6 +26,9 @@ public class Escritura : MonoBehaviour
 
     //Guardamos los colores que se usan para el texto normal, aciertos y errores
     private string[] colorLetra = new string[3];
+    private string[] texto = new string[30];
+    int numLineaActual = 0;
+    int totalLineas = 0;
 
     //Accedemos al script de configuración para leer datos de él
     public Configuracion configuracion;
@@ -40,21 +43,32 @@ public class Escritura : MonoBehaviour
 
         erroresSeguidos = 0;
 
+        //Leo todas las lineas del archivo y las almaceno en un arreglo        
+        foreach (string line in System.IO.File.ReadLines(@"Assets/Scripts/PruebaTexto.txt"))
+        {
+            texto[totalLineas] = line;
+            totalLineas++;
+        }
+
         SetPalabraActual();
     }
     private void SetPalabraActual()
     {
         //Aqui reiniciamos el texto cuando se termina de escribir una palabra, puede usarse para leer lineas
-        SetPalabraRestante(palabraActual, "");
-        Debug.Log("Aciertos" + aciertos);
-        Debug.Log("Errores" + errores);
-        aciertos = 0;
-        errores = 0;
+        if(numLineaActual == totalLineas)
+        {
+            Debug.Log("Ya acabaste al chile");
+        }
+        else
+        {
+            SetPalabraRestante(texto[numLineaActual], "");
+            numLineaActual++;
+        }
     }
 
     private void SetPalabraRestante(string palabraActualizada, string palabraAntigua)
     {
-        //Aquï¿½ actualizamos lo que se muestra en cada text 
+        //Aquí actualizamos lo que se muestra en cada text 
         palabraRestante =  palabraActualizada;
         string palabraMostrar = "<color=\"" + colorLetra[0] + "\">" + palabraActualizada + "</color>";
         wordOutput.text = palabraMostrar;
@@ -65,7 +79,6 @@ public class Escritura : MonoBehaviour
 
     private void Update()
     {
-        //Leemos en cada frame los valores de configuraciï¿½n para detectar cambios
         //Leemos los valores de configuración para detectar 
         wordOutput.fontSize = configuracion.getTamanioLetra();
         textoPasado.fontSize = configuracion.getTamanioLetra();
@@ -102,7 +115,7 @@ public class Escritura : MonoBehaviour
         QuitarLetra();
         if (palabraRestante.Length == 0){
             SetPalabraActual();
-            panelesNivel.activarPanel();
+            //panelesNivel.activarPanel();
         }
             
     }
@@ -112,14 +125,12 @@ public class Escritura : MonoBehaviour
         if (errorActual)
         {
             erroresSeguidos++;
-            Debug.Log(erroresSeguidos);
             palabraPasada += "<color=\"" + colorLetra[1] + "\">" + palabraRestante.Substring(0, 1) + "</color>";
             //"<color=\"" + colorLetra[0] + "\">" + palabraActualizada + "</color>";
         }
         else
         {
             erroresSeguidos = 0;
-            Debug.Log(erroresSeguidos);
             palabraPasada += "<color=\"" + colorLetra[2] + "\">" + palabraRestante.Substring(0, 1) + "</color>";
         }
 
