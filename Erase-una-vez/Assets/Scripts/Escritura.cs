@@ -5,46 +5,45 @@ using UnityEngine.UI;
 
 public class Escritura : MonoBehaviour
 {
-    //Salidas de texto de unity, una para tener el texto normal y otra para guardar las letras que ya pasaron
-    public Text wordOutput = null;
-    public Text textoPasado = null;
+    public Text wordOutput = null; //salida de texto
 
     private const int MAX_ERRORES_SEGUIDOS = 20;
 
-    private string palabraRestante = string.Empty;
-    //hay que poner todo el texto en minusculas porque todos los inputs se leen asï¿½
-    private string palabraActual;
-    //hay que poner todo el texto en minusculas porque todos los inputs se leen así
-    //Hay que guardar en una variable el texto que vayamos escribiendo
-    private string palabraPasada = string.Empty;
+    private string oracionRestante = string.Empty; //Oración que no ha sido escrita
+    private string oracionPasada = string.Empty; //Oracion que ya fue escrita que queremos mostrar en la pantalla
 
-    //variables para guardar aciertos, y contar errores y cambiar el color del texto  
     private int aciertos;
     private int errores;
     private int erroresSeguidos;
     private bool errorActual;
 
-    //Guardamos los colores que se usan para el texto normal, aciertos y errores
-    private string[] colorLetra = new string[3];
-    private string[] texto = new string[30];
-    int numLineaActual = 0;
-    int totalLineas = 0;
+    private int[] lineaImagen = new int[3];
 
-    //Accedemos al script de configuración para leer datos de él
-    public Configuracion configuracion;
+    private string[] colorLetra = new string[3]; 
+    private string[] texto = new string[30]; //Guardamos todas las lineas de texto que tenga el archivo
+    private int numLineaActual = 0; //contador de la liena que estamos mostrando en pantalla actualmente
+    private int totalLineas = 0; //Total de lineas leidas del archivo
+     
+    private bool activo; //Bandera para no poder escribir mientras se cambia el texto
+
+    public Configuracion configuracion; //Objeto de configuracion para poder obtener los valores del texto y volumen
     public PanelesNivel panelesNivel;
 
     void Start()
     {
-        //leemos de configuracion el color de la letra y el tamaño del texto
+        //leemos de configuracion el color y el tamaño del texto
         colorLetra = configuracion.getColorLetra();
         wordOutput.fontSize = configuracion.getTamanioLetra();
-        textoPasado.fontSize = configuracion.getTamanioLetra();
 
         erroresSeguidos = 0;
+        
+        //Asignamos en que linea del archivo debería cambiarse el dibujo de fondo, valores hardcodeados por ahora
+        lineaImagen[0] = 0;
+        lineaImagen[1] = 3;
+        lineaImagen[2] = 10;
 
         //Leo todas las lineas del archivo y las almaceno en un arreglo        
-        foreach (string line in System.IO.File.ReadLines(@"Assets/Scripts/PruebaTexto.txt"))
+        foreach (string line in System.IO.File.ReadLines(@"Assets/Textos/TresCochinitos.txt"))
         {
             texto[totalLineas] = line;
             totalLineas++;
@@ -54,43 +53,54 @@ public class Escritura : MonoBehaviour
     }
     private void SetPalabraActual()
     {
-        //Aqui reiniciamos el texto cuando se termina de escribir una palabra, puede usarse para leer lineas
+        //Aqui vemos si ya llegó a la ultima liena y  si no le actualizamos el texto y controlamos si puede o no escribir
+
         if(numLineaActual == totalLineas)
         {
             Debug.Log("Ya acabaste al chile");
+            Debug.Log("Aciertos: " + aciertos);
+            Debug.Log("Errores: " + errores);
+        }
+        else if(numLineaActual == 0)
+        {
+            ActualizarMensaje();
+            activo = true;
         }
         else
         {
-            SetPalabraRestante(texto[numLineaActual], "");
-            numLineaActual++;
+            activo = false;
+            StartCoroutine(Esperar());
+        }
+
+
+        if (numLineaActual == lineaImagen[1])
+        {
+            //Aquí cambiamos la imagen de fondo por el segundo dibujo, el primer dibujo lo ponemos desde el start
+            Debug.Log("Imagen: Las casas de paja y madera construidas, mientras dos cerditos juegan y el tercero sigue construyendo la casa de ladrillos.");
+        }
+        if (numLineaActual == lineaImagen[2])
+        {
+            //Aquí cambiamos la imagen de fondo por el tercer dibujo
+            Debug.Log("Imagen: Las casas de paja y madera destruidas, mientras que los tres festejan afuera de la casa de ladrillo, con el lobo desmayado.");
         }
     }
 
-    private void SetPalabraRestante(string palabraActualizada, string palabraAntigua)
+    private void SetOracionRestante(string palabraActualizada, string palabraAntigua)
     {
-        //Aquí actualizamos lo que se muestra en cada text 
-        palabraRestante =  palabraActualizada;
+        //Aquí actualizamos lo que se muestra en pantalla
+        oracionRestante =  palabraActualizada;
         string palabraMostrar = "<color=\"" + colorLetra[0] + "\">" + palabraActualizada + "</color>";
-        wordOutput.text = palabraMostrar;
-
-        palabraPasada = palabraAntigua;
-        textoPasado.text = palabraPasada;
+        wordOutput.text = palabraAntigua + palabraMostrar;
     }
 
     private void Update()
     {
-        //Leemos los valores de configuración para detectar 
+        //Leemos los valores de configuración para detectar cambios
         wordOutput.fontSize = configuracion.getTamanioLetra();
-        textoPasado.fontSize = configuracion.getTamanioLetra();
         colorLetra = configuracion.getColorLetra();
 
-        //Aquí habría una función para reiniciar el nivel si se superan los errores seguidos
-        if(erroresSeguidos > MAX_ERRORES_SEGUIDOS)
-        {
-            Debug.Log("Perdiste al chile");
-        }
-
-        if (Input.anyKeyDown)
+        //Capturamos que presione las teclas y verificamos que si puede escribir
+        if (Input.anyKeyDown && activo)
         {
             string keysPressed = Input.inputString;
             if (keysPressed.Length == 1)
@@ -102,7 +112,7 @@ public class Escritura : MonoBehaviour
 
     private void CompararCaracter(string typedLetter)
     {
-        if (palabraRestante.IndexOf(typedLetter) == 0)
+        if (oracionRestante.IndexOf(typedLetter) == 0) //Buscamos la letra ingresada en la posicion 0 de la cadena que debemos escribir
         {
             errorActual = false;
             aciertos++;
@@ -112,8 +122,8 @@ public class Escritura : MonoBehaviour
             errorActual = true;
             errores++;
         }
-        QuitarLetra();
-        if (palabraRestante.Length == 0){
+        QuitarLetra(); //Quitamos la letra de la cadena independientemente de si fue acierto o error
+        if (oracionRestante.Length == 0){ //Verificamos que no haya terminado de escribir la oracion y si lo hizo la cambiamos
             SetPalabraActual();
             //panelesNivel.activarPanel();
         }
@@ -122,20 +132,40 @@ public class Escritura : MonoBehaviour
 
     private void QuitarLetra()
     {
-        if (errorActual)
+        if (errorActual) //Comprobamos si se equivocó en la ultima letra para cambiar el color del texto
         {
             erroresSeguidos++;
-            palabraPasada += "<color=\"" + colorLetra[1] + "\">" + palabraRestante.Substring(0, 1) + "</color>";
+            oracionPasada += "<color=\"" + colorLetra[1] + "\">" + oracionRestante.Substring(0, 1) + "</color>";
             //"<color=\"" + colorLetra[0] + "\">" + palabraActualizada + "</color>";
         }
         else
         {
             erroresSeguidos = 0;
-            palabraPasada += "<color=\"" + colorLetra[2] + "\">" + palabraRestante.Substring(0, 1) + "</color>";
+            oracionPasada += "<color=\"" + colorLetra[2] + "\">" + oracionRestante.Substring(0, 1) + "</color>";
         }
 
-        string newString = palabraRestante.Remove(0, 1);
-        SetPalabraRestante(newString, palabraPasada);
+        //Aquí habría una función para reiniciar el nivel si se superan los errores seguidos, ahorita nomas le decimos que perdió
+        if (erroresSeguidos > MAX_ERRORES_SEGUIDOS)
+        {
+            Debug.Log("Perdiste al chile");
+        }
+
+        string newString = oracionRestante.Remove(0, 1); //Quitamos la ultima letra
+        SetOracionRestante(newString, oracionPasada); //Actualizamos el texto en pantalla
+    }
+
+    IEnumerator Esperar()
+    {   //Esperamos para que se alcance a ver si la última letra de una oración se escribió bien o mal.
+        yield return new WaitForSeconds(.3f);
+        ActualizarMensaje();
+    }
+
+    private void ActualizarMensaje()
+    {
+        SetOracionRestante(texto[numLineaActual], "");
+        oracionPasada = "";
+        numLineaActual++;
+        activo = true;
     }
 
 }
