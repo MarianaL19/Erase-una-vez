@@ -24,8 +24,14 @@ public class VisualizarNivel : MonoBehaviour
     //Objetos comunes de la visualización
     [SerializeField] private Text tituloNivel;
     [SerializeField] private Text tituloEstrellas;
-    [SerializeField] private Button btnTexto;
-    [SerializeField] private Button btnAudio;
+    [SerializeField] private GameObject btnTexto;
+    [SerializeField] private GameObject btnAudio;
+
+    //Si el nivel solo tiene texto, ocultaremos este apartado de cambio
+    [SerializeField] private GameObject objBtnAudio;
+
+    //GameObject para bloquear la interacción con los botones cuando esté bloqueado
+    [SerializeField] private GameObject bloquearPanelBotones;
 
     //Variables para asignar los valores del Archivo Lógico del nivel
     public int noNivel;
@@ -34,6 +40,7 @@ public class VisualizarNivel : MonoBehaviour
     public bool bloqueadoAudio;
     public bool varianteAudio;
     public bool audioCompletado;
+    public bool trabalenguas;
     public int estrellasTotales;
 
     // Start is called before the first frame update
@@ -41,7 +48,13 @@ public class VisualizarNivel : MonoBehaviour
     {
         // cargarDatos();
         inicializarNivel();
+        btnTexto.gameObject.SetActive(false);
+        btnAudio.gameObject.SetActive(false);
         popUpCompra.enabled = false;
+
+        if(trabalenguas == true){
+            objBtnAudio.gameObject.SetActive(false);
+        }
     }
 
     void Update(){
@@ -63,12 +76,14 @@ public class VisualizarNivel : MonoBehaviour
         tituloEstrellas.text = estrellasTotales.ToString();
         objEstrellas.gameObject.SetActive(false);
         objMedalla.gameObject.SetActive(false);
+        bloquearPanelBotones.gameObject.SetActive(false);
 
         //Si el nivel seleccionado está bloqueado
         if(bloqueado == true){
             objDesbloqueado.gameObject.SetActive(false);
-            btnTexto.interactable = false;
-            btnAudio.interactable = false;
+            bloquearPanelBotones.gameObject.SetActive(true);
+            // btnTexto.interactable = false;
+            // btnAudio.interactable = false;
         }
         //Si está desbloqueado y no está en el modo de la variante audio
         else if(bloqueado == false && varianteAudio == false){
@@ -77,8 +92,12 @@ public class VisualizarNivel : MonoBehaviour
             
             objBloquearAudio.gameObject.SetActive(false);
             botones.gameObject.SetActive(true);
-            btnTexto.interactable = true;
-            btnAudio.interactable = true;
+            bloquearPanelBotones.gameObject.SetActive(false);
+            // btnTexto.interactable = true;
+            // btnAudio.interactable = true;
+
+            btnTexto.gameObject.SetActive(true);
+            btnAudio.gameObject.SetActive(false);
         }
         //Está desbloqueado y está en la variante audio
         else if(bloqueado == false && varianteAudio == true){
@@ -90,6 +109,9 @@ public class VisualizarNivel : MonoBehaviour
                 botones.gameObject.SetActive(true);
                 if(audioCompletado) objMedalla.gameObject.SetActive(true);
             }
+
+            btnTexto.gameObject.SetActive(false);
+            btnAudio.gameObject.SetActive(true);
         }
 
         inicializarInfo();
