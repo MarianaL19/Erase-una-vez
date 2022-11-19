@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+//using TMPro;
 using System;
 using System.Text;
 
@@ -62,10 +62,10 @@ public class Reporte : MonoBehaviour
     public float palXMin;
 
     //Variables para los outputs en pantalla
-    public TextMeshProUGUI precisionOutput;
-    public TextMeshProUGUI tiempoOutput;
-    public TextMeshProUGUI palXMinOutout;
-
+    public Text precisionOutput;
+    public Text tiempoOutput;
+    public Text palXMinOutput;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -172,6 +172,6 @@ public class Reporte : MonoBehaviour
         palXMin = Single.Parse(pres);
         Debug.Log("plm: " + palXMin);
         //Y el resultado se envia a la variable para el output
-        palXMinOutout.text = "" + palXMin;
+        palXMinOutput.text = "" + palXMin;
     }
 }
