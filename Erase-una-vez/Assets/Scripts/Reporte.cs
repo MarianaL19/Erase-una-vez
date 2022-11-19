@@ -2,22 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-//using TMPro;
 using System;
 using System.Text;
 
 public class Reporte : MonoBehaviour
 {
-    //Version rudimentaria para el reporte que sale al finalizar un nivel
+    //Version mejorada para el reporte que sale al finalizar un nivel
     //NOTA: Tener en cuenta que que puede que tenga que mandar informacion a algun
     //      lado, acerca de cada nivel para ser recuparada despues.
+        //RESPUESTA: Aqui solo se recibe informacion y se calculan los derivados
+        //           para mostrarse en pantalla, nada se envia a otro lado
     //NOTA: Terminar la parte de recibir informacion de otras escenas.
     //NOTA: Implementar otra version para reporte de utlima partida.
+        //RESPUESTA: Ya se implemento con un condicional.
+    //NOTA: Implementar como saber de que ventana viene el jugador para saber que
+    //      tipo de reporte mostrar.
 
     //VARIABLES
 
     //De algun lugar tendran que venir, aun no esta implementado para que
-    //lo saque del nivel
+    //lo saque de 'base de datos'
 
     //Nombres y variables provisionales
 
@@ -27,7 +31,7 @@ public class Reporte : MonoBehaviour
     //va a mostrar
     public bool prePartida = false;
 
-    //Objetos contenedores de los botones, para poder hacer el sprit que
+    //Objetos contenedores de los botones, para poder hacer el script que
     //hace que aparezcan los botones que deben de aparecer dependiendo
     //del tipo de reporte
     [SerializeField] private GameObject objPre;
@@ -78,6 +82,9 @@ public class Reporte : MonoBehaviour
         Debug.Log("TiempoTotal() termino correctamente");
         PalabraXMinuto();
         Debug.Log("PalabraXMinuto() termino correctamente");
+        
+        //Aqui tentaticamente iria la funcion para saber que botones mostrar
+
         //If para seleccionar que grupo de botones van a aparecer en la escena
         if(prePartida == true)
         {
