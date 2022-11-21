@@ -8,28 +8,20 @@ using System.Text;
 public class Reporte : MonoBehaviour
 {
     //Version mejorada para el reporte que sale al finalizar un nivel
-    //NOTA: Tener en cuenta que que puede que tenga que mandar informacion a algun
-    //      lado, acerca de cada nivel para ser recuparada despues.
-        //RESPUESTA: Aqui solo se recibe informacion y se calculan los derivados
-        //           para mostrarse en pantalla, nada se envia a otro lado
+
     //NOTA: Terminar la parte de recibir informacion de otras escenas.
-    //NOTA: Implementar otra version para reporte de utlima partida.
-        //RESPUESTA: Ya se implemento con un condicional.
     //NOTA: Implementar como saber de que ventana viene el jugador para saber que
     //      tipo de reporte mostrar.
 
     //VARIABLES
 
-    //De algun lugar tendran que venir, aun no esta implementado para que
-    //lo saque de 'base de datos'
-
-    //Nombres y variables provisionales
+    //Nombres de variables
 
     //Para cambio de botonoes
 
     //Variable para saber que reporte se esta mostrando y saber que botones
     //va a mostrar
-    public bool prePartida = false;
+    public bool prePartida;
 
     //Objetos contenedores de los botones, para poder hacer el script que
     //hace que aparezcan los botones que deben de aparecer dependiendo
@@ -40,18 +32,18 @@ public class Reporte : MonoBehaviour
     //Para Precision
 
     //Cantidad de aciertos por caracter, viene de base de datos
-    public int caracteresCorrectos = 558;
+    public int caracteresCorrectos;
     //Precision total, calculado en script
     public float precision;
     //Total de caracteres, viene de base de datos
     //Se usa para poder calcular la precision
-    public int totalCaracteres = 684;
+    public int totalCaracteres;
 
     //Para tiempo
 
     //Variable de tiempo en segundos, recibe el tiempo en flotante, viene de base
     //de datos
-    public float tiempo = 125.2654f;
+    public float tiempo;
     //Variable para almacenar la cantidad de minutos completos, se calcula en script
     public int minuto = 0;
     //Variable para almacenar la cantidad de segundos sueltos, se calcula en script
@@ -60,7 +52,7 @@ public class Reporte : MonoBehaviour
     //Para palabras por minuto
 
     //Total de palabras, viene de base de datos
-    public int totalPalabras = 150;
+    public int totalPalabras;
     //Variable para almacenar el valor final de palabras por minuto, se calcula
     //en script
     public float palXMin;
@@ -69,12 +61,15 @@ public class Reporte : MonoBehaviour
     public Text precisionOutput;
     public Text tiempoOutput;
     public Text palXMinOutput;
-    
+
     // Start is called before the first frame update
     void Start()
     {
         //Version de debug para mostrar que inicio correctamente y recorre
-        //las fucniones satisfactoriamente
+        //las funciones satisfactoriamente
+        Debug.Log("Comienza carga de datos");
+        cargarDatos();
+        Debug.Log("Los datos se cargaron");
         Debug.Log("Hola, comenzamos");
         Precision();
         Debug.Log("Precision() termino correctamente");
@@ -82,28 +77,60 @@ public class Reporte : MonoBehaviour
         Debug.Log("TiempoTotal() termino correctamente");
         PalabraXMinuto();
         Debug.Log("PalabraXMinuto() termino correctamente");
-        
-        //Aqui tentaticamente iria la funcion para saber que botones mostrar
 
+        //Se va a setear en esta funcion
+        prePartida = true;
+
+        //Aqui tentaticamente iria la funcion para saber que botones mostrar
         //If para seleccionar que grupo de botones van a aparecer en la escena
-        if(prePartida == true)
+        if (prePartida == true)
         {
             //Aparecen los botones para el reporte pre-partida
+            Debug.Log("Mostrar prepartida");
             objPre.gameObject.SetActive(true);
             objPost.gameObject.SetActive(false);
         }
         else
         {
             //Aparecen los botonoes para el reporte post-partida
+            Debug.Log("Mostrar postpartida");
             objPre.gameObject.SetActive(false);
             objPost.gameObject.SetActive(true);
         }
+        Debug.Log("Estado de prepartida: " + prePartida);
     }
 
     // Update is called once per frame
     void Update()
     {
         //No se usa, aun
+    }
+
+    //Se cargan todos los datos de las PlayerPrefs
+    public void cargarDatos()
+    {
+        int numNivel = 1;
+        //Version de prueba
+        //VERSION DE PRUEBA GUARDA Y LEE AQUI MISMO
+        PlayerPrefs.SetInt("caracteresCorrectos" + numNivel, 600);
+        Debug.Log("se subio caracteresCorrectos");
+        PlayerPrefs.SetInt("totalCaracteres" + numNivel, 600);
+        Debug.Log("se subio totalCaracteres");
+        PlayerPrefs.SetFloat("tiempo" + numNivel, 120.0000f);
+        Debug.Log("se subio tiempo");
+        PlayerPrefs.SetInt("totalPalabras" + numNivel, 12000);
+        Debug.Log("se subio totalPalabras");
+        Debug.Log("Los datos se cargaron en playerpref");
+
+        //Lectura de datos desde playerprefs
+        caracteresCorrectos = PlayerPrefs.GetInt("caracteresCorrectos" + numNivel);
+        Debug.Log("se descargo caracteresCorrectos");
+        totalCaracteres = PlayerPrefs.GetInt("totalCaracteres" + numNivel);
+        Debug.Log("se descargo totalCaracteres");
+        tiempo = PlayerPrefs.GetFloat("tiempo" + numNivel);
+        Debug.Log("se descargo tiempo");
+        totalPalabras = PlayerPrefs.GetInt("totalPalabras" + numNivel);
+        Debug.Log("se descargo totalPalabras");
     }
 
     public void Precision()
