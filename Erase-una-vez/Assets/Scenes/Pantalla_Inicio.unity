@@ -391,6 +391,7 @@ GameObject:
   m_Component:
   - component: {fileID: 948355922}
   - component: {fileID: 948355921}
+  - component: {fileID: 948355923}
   m_Layer: 0
   m_Name: Usuario
   m_TagString: Untagged
@@ -427,6 +428,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &948355923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948355920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a184e3793ce084c46be655527ff1fb9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arregloTotalCaracteres: 0000000000000000000000000000000000000000
+  arregloTotalPalabras: 0000000000000000000000000000000000000000
+  arregloNoErrores: 0000000000000000000000000000000000000000
+  arregloTrabalenguas: 0000000000000000000000000000000000000000
+  arregloPrimerCambioDibujo: 0000000000000000000000000000000000000000
+  arregloSegundoCambioDibujo: 0000000000000000000000000000000000000000
 --- !u!1 &1172995789
 GameObject:
   m_ObjectHideFlags: 0

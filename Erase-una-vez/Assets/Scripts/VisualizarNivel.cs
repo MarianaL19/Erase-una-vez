@@ -7,12 +7,13 @@ using UnityEngine.SceneManagement;
 
 public class VisualizarNivel : MonoBehaviour
 {
+    //Objetos para reporte y Pop-up
+    [SerializeField] private Canvas popUpCompra;
+    [SerializeField] private Canvas canvasReporte;
+
     //Objetos que se utilizan para mostrar el conjunto de nivel: bloqueado o desbloqueado
     [SerializeField] private GameObject objBloqueado;
     [SerializeField] private GameObject objDesbloqueado;
-
-    //Objeto Pop-up
-    [SerializeField] private Canvas popUpCompra;
 
     //Objetos del nivel desbloqueado
     [SerializeField] private GameObject objEstrellas;
@@ -35,22 +36,23 @@ public class VisualizarNivel : MonoBehaviour
 
     //Variables para asignar los valores del Archivo Lógico del nivel
     public int noNivel;
-    public int noEstrellas;
-    public bool bloqueado;
-    public bool bloqueadoAudio;
-    public bool varianteAudio;
-    public bool audioCompletado;
-    public bool trabalenguas;
-    public int estrellasTotales;
+    private int noEstrellas; //Estas deberían ser de usuario pero son del nivel
+    private bool bloqueado;
+    private bool bloqueadoAudio;
+    private bool varianteAudio;
+    private bool audioCompletado;
+    private bool trabalenguas;
+    public int estrellasTotales; //estrellas del usuario
 
     // Start is called before the first frame update
     void Start()
     {
-        // cargarDatos();
+        cargarDatos();
         inicializarNivel();
         btnTexto.gameObject.SetActive(false);
         btnAudio.gameObject.SetActive(false);
         popUpCompra.enabled = false;
+        canvasReporte.enabled = false;
 
         if(trabalenguas == true){
             objBtnAudio.gameObject.SetActive(false);
@@ -61,9 +63,25 @@ public class VisualizarNivel : MonoBehaviour
         inicializarNivel();
     }
 
+    void OnDestroy()
+    {
+        guardarDatos();
+        Debug.Log("OnDestroy1");
+    }
+
+    //Se cargan todos los datos de las PlayerPrefs
     public void cargarDatos()
     {
-        //Se cargan todos los datos de las PlayerPrefs
+        //Usuario
+        noEstrellas = PlayerPrefs.GetInt("noEstrellas" + noNivel);
+
+        //Nivel
+        estrellasTotales = PlayerPrefs.GetInt("estrellas" + noNivel);
+        bloqueado = PlayerPrefs.GetInt("bloqueado" + noNivel)==1?true:false;
+        bloqueadoAudio = PlayerPrefs.GetInt("bloqueadoAudio" + noNivel)==1?true:false;
+        varianteAudio = PlayerPrefs.GetInt("varianteAudio" + noNivel)==1?true:false;
+        audioCompletado = PlayerPrefs.GetInt("audioCompletado" + noNivel)==1?true:false;
+        trabalenguas = PlayerPrefs.GetInt("trabalenguas"+ noNivel)==1?true:false;
     }
 
     public void guardarDatos()
@@ -178,4 +196,13 @@ public class VisualizarNivel : MonoBehaviour
         popUpCompra.enabled = false;
     }
 
+    public void abrirReporte()
+    {
+        canvasReporte.enabled = true;
+    }
+
+    public void cerrarReporte()
+    {
+        canvasReporte.enabled = false;
+    }
 }
