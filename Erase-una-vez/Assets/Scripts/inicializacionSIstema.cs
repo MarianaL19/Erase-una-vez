@@ -54,7 +54,7 @@ public class inicializacionSIstema : MonoBehaviour
             PlayerPrefs.SetInt("color", 1);
 
             //Variables de jugador
-            PlayerPrefs.SetInt("noEstrellas", 0);
+            PlayerPrefs.SetInt("noEstrellas", 10);
             PlayerPrefs.SetInt("nivelActual", 0);
             PlayerPrefs.SetInt("primeraEjecucion", 1);
             
@@ -65,9 +65,9 @@ public class inicializacionSIstema : MonoBehaviour
             Debug.Log("Entro al else");
             for(int numNivel = 1; numNivel < 6; numNivel++)
             {
-                Debug.Log(PlayerPrefs.GetInt("noNivel" + numNivel));
-                Debug.Log("Bloqueado: ");
-                Debug.Log(PlayerPrefs.GetInt("bloqueado" + numNivel));
+                // Debug.Log(PlayerPrefs.GetInt("noNivel" + numNivel));
+                // Debug.Log("Bloqueado: ");
+                // Debug.Log(PlayerPrefs.GetInt("bloqueado" + numNivel));
             }
         }
     }

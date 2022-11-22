@@ -17,13 +17,12 @@ public class VisualizarNivel : MonoBehaviour
 
     //Objetos del nivel desbloqueado
     [SerializeField] private GameObject objEstrellas;
-    [SerializeField] private GameObject[] estrellas;
+    [SerializeField] private GameObject[] arregloEstrellas;
     [SerializeField] private GameObject botones;
     [SerializeField] private GameObject objBloquearAudio;
     [SerializeField] private GameObject objMedalla;
 
     //Objetos comunes de la visualización
-    [SerializeField] private Text tituloNivel;
     [SerializeField] private Text tituloEstrellas;
     [SerializeField] private GameObject btnTexto;
     [SerializeField] private GameObject btnAudio;
@@ -34,20 +33,26 @@ public class VisualizarNivel : MonoBehaviour
     //GameObject para bloquear la interacción con los botones cuando esté bloqueado
     [SerializeField] private GameObject bloquearPanelBotones;
 
+
     //Variables para asignar los valores del Archivo Lógico del nivel
-    public int noNivel;
-    private int noEstrellas; //Estas deberían ser de usuario pero son del nivel
+
+    private int nivelActual;
+    private int estrellas; // Estrellas del nivel
     private bool bloqueado;
     private bool bloqueadoAudio;
     private bool varianteAudio;
     private bool audioCompletado;
     private bool trabalenguas;
-    public int estrellasTotales; //estrellas del usuario
+    private int noEstrellas; //estrellas del usuario
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         cargarDatos();
+    }
+    
+    void Start()
+    {
         inicializarNivel();
         btnTexto.gameObject.SetActive(false);
         btnAudio.gameObject.SetActive(false);
@@ -73,57 +78,72 @@ public class VisualizarNivel : MonoBehaviour
     public void cargarDatos()
     {
         //Usuario
-        noEstrellas = PlayerPrefs.GetInt("noEstrellas" + noNivel);
+        nivelActual = PlayerPrefs.GetInt("nivelActual");
+        noEstrellas = PlayerPrefs.GetInt("noEstrellas");
 
         //Nivel
-        estrellasTotales = PlayerPrefs.GetInt("estrellas" + noNivel);
-        bloqueado = PlayerPrefs.GetInt("bloqueado" + noNivel)==1?true:false;
-        bloqueadoAudio = PlayerPrefs.GetInt("bloqueadoAudio" + noNivel)==1?true:false;
-        varianteAudio = PlayerPrefs.GetInt("varianteAudio" + noNivel)==1?true:false;
-        audioCompletado = PlayerPrefs.GetInt("audioCompletado" + noNivel)==1?true:false;
-        trabalenguas = PlayerPrefs.GetInt("trabalenguas"+ noNivel)==1?true:false;
+        estrellas = PlayerPrefs.GetInt("estrellas" + nivelActual);
+        bloqueado = PlayerPrefs.GetInt("bloqueado" + nivelActual)==1?true:false;
+        bloqueadoAudio = PlayerPrefs.GetInt("bloqueadoAudio" + nivelActual)==1?true:false;
+        varianteAudio = PlayerPrefs.GetInt("varianteAudio" + nivelActual)==1?true:false;
+        audioCompletado = PlayerPrefs.GetInt("audioCompletado" + nivelActual)==1?true:false;
+        trabalenguas = PlayerPrefs.GetInt("trabalenguas"+ nivelActual)==1?true:false;
     }
 
     public void guardarDatos()
     {
         //Se guardan todos los datos en playerPrefs cuando se destruya la escena
+
+        //Usuario
+        PlayerPrefs.SetInt("noEstrellas", noEstrellas);
+
+        //Nivel
+        PlayerPrefs.SetInt("bloqueado"+ nivelActual, bloqueado?1:0);
+        PlayerPrefs.SetInt("bloqueadoAudio"+ nivelActual, bloqueadoAudio?1:0);
+        PlayerPrefs.SetInt("varianteAudio"+ nivelActual, varianteAudio?1:0);
+        PlayerPrefs.Save();
     }
 
     public void inicializarNivel()
     {
-        tituloEstrellas.text = estrellasTotales.ToString();
+        tituloEstrellas.text = noEstrellas.ToString();
         objEstrellas.gameObject.SetActive(false);
         objMedalla.gameObject.SetActive(false);
         bloquearPanelBotones.gameObject.SetActive(false);
+        botones.gameObject.SetActive(false);
+        objBloquearAudio.gameObject.SetActive(false);
+        objBloqueado.gameObject.SetActive(false);
 
         //Si el nivel seleccionado está bloqueado
         if(bloqueado == true){
+            objBloqueado.gameObject.SetActive(true);
+            botones.gameObject.SetActive(false);
             objDesbloqueado.gameObject.SetActive(false);
             bloquearPanelBotones.gameObject.SetActive(true);
-            // btnTexto.interactable = false;
-            // btnAudio.interactable = false;
+
         }
         //Si está desbloqueado y no está en el modo de la variante audio
         else if(bloqueado == false && varianteAudio == false){
             objBloqueado.gameObject.SetActive(false);
             objDesbloqueado.gameObject.SetActive(true);
             
-            objBloquearAudio.gameObject.SetActive(false);
+            // objBloquearAudio.gameObject.SetActive(false);
             botones.gameObject.SetActive(true);
             bloquearPanelBotones.gameObject.SetActive(false);
-            // btnTexto.interactable = true;
-            // btnAudio.interactable = true;
 
             btnTexto.gameObject.SetActive(true);
             btnAudio.gameObject.SetActive(false);
         }
         //Está desbloqueado y está en la variante audio
         else if(bloqueado == false && varianteAudio == true){
+            //Si la variante de audio está bloqueada
             if(bloqueadoAudio == true)
             {
                 objBloquearAudio.gameObject.SetActive(true);
                 botones.gameObject.SetActive(false);
-            }else{
+            }
+            //Si la variante audio está desbloqueada
+            else{
                 botones.gameObject.SetActive(true);
                 if(audioCompletado) objMedalla.gameObject.SetActive(true);
             }
@@ -137,22 +157,20 @@ public class VisualizarNivel : MonoBehaviour
 
     public void inicializarInfo()
     {
-        tituloNivel.text = "Lvl" + noNivel.ToString();
-
         //Si no es una variante de audio, se muestran las estrellas
         if(varianteAudio == false){
             // botones.gameObject.SetActive(true);
             objEstrellas.gameObject.SetActive(true);
 
-            if (noEstrellas == 0){
-                estrellas[0].SetActive(false);
-                estrellas[1].SetActive(false);
-                estrellas[2].SetActive(false);
-            }else if(noEstrellas == 1){
-                estrellas[1].SetActive(false);
-                estrellas[2].SetActive(false);
-            }else if(noEstrellas == 2){
-                estrellas[2].SetActive(false);
+            if (estrellas == 0){
+                arregloEstrellas[0].SetActive(false);
+                arregloEstrellas[1].SetActive(false);
+                arregloEstrellas[2].SetActive(false);
+            }else if(estrellas == 1){
+                arregloEstrellas[1].SetActive(false);
+                arregloEstrellas[2].SetActive(false);
+            }else if(estrellas == 2){
+                arregloEstrellas[2].SetActive(false);
             }
         }
     }
@@ -170,9 +188,9 @@ public class VisualizarNivel : MonoBehaviour
 
     public void comprarNivelTexto()
     {
-        if(estrellasTotales >= 2){
-            print(estrellasTotales);
-            estrellasTotales = estrellasTotales - 2;
+        if(noEstrellas >= 2){
+            print(noEstrellas);
+            noEstrellas = noEstrellas - 2;
             bloqueado = false;
         }else{
             popUpCompra.enabled = true;
@@ -181,9 +199,9 @@ public class VisualizarNivel : MonoBehaviour
 
     public void comprarNivelAudio()
     {
-        if(estrellasTotales >= 2){
-            print(estrellasTotales);
-            estrellasTotales = estrellasTotales - 2;
+        if(noEstrellas >= 2){
+            print(noEstrellas);
+            noEstrellas = noEstrellas - 2;
             bloqueadoAudio = false;
             objBloquearAudio.gameObject.SetActive(false);
         }else{

@@ -14,46 +14,61 @@ public class SlotInfo : MonoBehaviour
     [SerializeField] private GameObject estrella3;
 
     public int noNivel;
-    public int noEstrellas;
-    public bool bloqueado;
-    public Text tituloNivel;
+    private int estrellas;
+    private bool bloqueado;
+    // private Text tituloNivel;
 
     // Start is called before the first frame update
     void Start()
     {
+        cargarDatos();
         inicializarSlot();
     }
 
     public void inicializarSlot()
     {
         //Se inicializa como si el nivel SÍ ESTUVIERA bloqueado
-        interactividad.interactable = false;
         objEstrellas.gameObject.SetActive(false);
 
         //Si no está bloqueado, se cambian algunos valores.
         if(bloqueado == false){
-            tituloNivel.text = noNivel.ToString();
+            // tituloNivel.text = noNivel.ToString();
             bloqueo.gameObject.SetActive(false);
             objEstrellas.gameObject.SetActive(true);
-            interactividad.interactable = true;
 
             //Evalúa qué estrellas estarán encendidas
-            if (noEstrellas == 0){
+            if (estrellas == 0){
                 estrella1.gameObject.SetActive(false);
                 estrella2.gameObject.SetActive(false);
                 estrella3.gameObject.SetActive(false);
-            }else if(noEstrellas == 1){
+            }else if(estrellas == 1){
                 estrella2.gameObject.SetActive(false);
                 estrella3.gameObject.SetActive(false);
-            }else if(noEstrellas == 2){
+            }else if(estrellas == 2){
                 estrella3.gameObject.SetActive(false);
             }
         }
     }
-
-
-    public void CargarNivel()
+    public void cargarDatos()
     {
+        //Usuario
+        estrellas = PlayerPrefs.GetInt("estrellas" + noNivel);
+
+        //Nivel
+        estrellas = PlayerPrefs.GetInt("estrellas" + noNivel);
+        bloqueado = PlayerPrefs.GetInt("bloqueado" + noNivel)==1?true:false;
+
+    }
+
+    public void guardarDatos()
+    {
+        PlayerPrefs.SetInt("nivelActual", noNivel);
+        PlayerPrefs.Save();
+    }
+
+    public void visualizarNivel()
+    {
+        guardarDatos();
         SceneManager.LoadScene("Visualizar_Nivel");
     }
     
