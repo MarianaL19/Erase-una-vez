@@ -15,7 +15,9 @@ public class Escritura : MonoBehaviour
     private int aciertos;
     private int errores;
     private int erroresSeguidos;
+    private int tiempo;
     private bool errorActual;
+    private bool jugando;
 
     private int[] lineaImagen = new int[3];
 
@@ -36,14 +38,17 @@ public class Escritura : MonoBehaviour
         wordOutput.fontSize = configuracion.getTamanioLetra();
 
         erroresSeguidos = 0;
-        
+
+        jugando = true;
+        InvokeRepeating("Cronometro", 0f, 1f);//inicia el conteo del tiempo, lo vamos a cambiar para iniciarlo cuando se quite la pantalla de tutorial
+
         //Asignamos en que linea del archivo debería cambiarse el dibujo de fondo, valores hardcodeados por ahora
         lineaImagen[0] = 0;
         lineaImagen[1] = 3;
         lineaImagen[2] = 10;
 
         //Leo todas las lineas del archivo y las almaceno en un arreglo        
-        foreach (string line in System.IO.File.ReadLines(@"Assets/Textos/TresCochinitos.txt"))
+        foreach (string line in System.IO.File.ReadLines(@"Assets/Textos/PruebaTexto.txt"))
         {
             texto[totalLineas] = line;
             totalLineas++;
@@ -58,8 +63,10 @@ public class Escritura : MonoBehaviour
         if(numLineaActual == totalLineas)
         {
             Debug.Log("Ya acabaste al chile");
+            jugando = false;
             Debug.Log("Aciertos: " + aciertos);
             Debug.Log("Errores: " + errores);
+            Debug.Log("Tiempo: " + tiempo);
         }
         else if(numLineaActual == 0)
         {
@@ -71,7 +78,6 @@ public class Escritura : MonoBehaviour
             activo = false;
             StartCoroutine(Esperar());
         }
-
 
         if (numLineaActual == lineaImagen[1])
         {
@@ -90,7 +96,7 @@ public class Escritura : MonoBehaviour
         //Aquí actualizamos lo que se muestra en pantalla
         oracionRestante =  palabraActualizada;
         string palabraMostrar = "<color=\"" + colorLetra[0] + "\">" + palabraActualizada + "</color>";
-        wordOutput.text = palabraAntigua + palabraMostrar;
+        wordOutput.text = palabraAntigua + "|" + palabraMostrar;
     }
 
     private void Update()
@@ -167,5 +173,19 @@ public class Escritura : MonoBehaviour
         numLineaActual++;
         activo = true;
     }
+    void Cronometro()
+    {
+        if(jugando)
+            tiempo++;
+    }
 
+    public void iniciarTiempo()
+    {
+        jugando = true;
+    }
+
+    public int getTiempo()
+    {
+        return tiempo;
+    }
 }
