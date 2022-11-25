@@ -7,6 +7,7 @@ public class inicializacionSIstema : MonoBehaviour
     public int[] arregloTotalCaracteres = new int[5];
     public int[] arregloTotalPalabras = new int[5];
     public int[] arregloNoErrores = new int[5];
+    public int[] arregloTiempoCompletado = new int[5];
     public int[] arregloTrabalenguas = new int[5];
     public int[] arregloPrimerCambioDibujo = new int[5];
     public int[] arregloSegundoCambioDibujo = new int[5];
@@ -27,9 +28,8 @@ public class inicializacionSIstema : MonoBehaviour
                 PlayerPrefs.SetInt("totalCaracteres" + numNivel, arregloTotalCaracteres[numNivel-1]);
                 PlayerPrefs.SetInt("totalPalabras" + numNivel, arregloTotalPalabras[numNivel-1] );
                 PlayerPrefs.SetInt("noErrores" + numNivel, arregloNoErrores[numNivel-1] );
+                PlayerPrefs.SetInt("tiempoCompletado" + numNivel, arregloTiempoCompletado[numNivel-1] );
                 PlayerPrefs.SetInt("trabalenguas" + numNivel, arregloTrabalenguas[numNivel-1]);
-                PlayerPrefs.SetInt("primerCambioDibujo" + numNivel, arregloPrimerCambioDibujo[numNivel-1]);
-                PlayerPrefs.SetInt("segundoCambioDibujo" + numNivel, arregloSegundoCambioDibujo[numNivel-1]);
 
                 //Variables del nivel 
                 // Para los valores booleanos: 1->bloqueado y 0->desbloqueado
@@ -38,11 +38,11 @@ public class inicializacionSIstema : MonoBehaviour
                 PlayerPrefs.SetInt("estrellas" + numNivel, 0);
                 //Si está en la variante de audio o no
                 PlayerPrefs.SetInt("varianteAudio" + numNivel, 0);
-                PlayerPrefs.SetInt("bloqueado" + numNivel, numNivel==1 ? 0 : 1);
+                PlayerPrefs.SetInt("bloqueado" + numNivel, (numNivel==1 | numNivel==2) ? 0 : 1);
                 PlayerPrefs.SetInt("bloqueadoAudio" + numNivel, 1);
                 PlayerPrefs.SetInt("estrellaPrecision" + numNivel, 0);
                 PlayerPrefs.SetInt("estrellaTiempo" + numNivel, 0);
-                PlayerPrefs.SetInt("estrellaPPM" + numNivel, 0);
+                PlayerPrefs.SetInt("estrellaTerminado" + numNivel, 0);
                 PlayerPrefs.SetInt("audioCompletado" + numNivel, 0);
 
                 //Creamos esta key para instanciar que ya se ejecutó por primera vez                
