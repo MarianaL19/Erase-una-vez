@@ -5,32 +5,44 @@ using UnityEngine.UI;
 using System;
 using System.Text;
 
-public class Reporte : MonoBehaviour
+public class ReportePostPartida : MonoBehaviour
 {
-    //Version mejorada para el reporte que sale antes de un nivel
-    //Script para mostrar pre-partida
+    //Version mejorada para el reporte que sale al finalizar un nivel
+    //Script para mostrar post-partida
 
     //VARIABLES
 
+    //Nombres de variables
+
+    //Objeto escritura para acceder a sus metodos
+    public Escritura objEscritura;
+
     //Para cambio de botonoes
-    //Variable para saber que reporte se esta mostrando y saber que botones va a mostrar
+
+    //Variable para saber que reporte se esta mostrando y saber que botones
+    //va a mostrar
     public bool prePartida;
 
-    //Objetos contenedores de los botones
-    //Para poder hacer que aparezcan los botones que deben de aparecer dependiendo del tipo de reporte
+    //Objetos contenedores de los botones, para poder hacer el script que
+    //hace que aparezcan los botones que deben de aparecer dependiendo
+    //del tipo de reporte
     [SerializeField] private GameObject objPre;
     [SerializeField] private GameObject objPost;
 
     //Para Precision
-    //Cantidad de aciertos por caracter, viene de base de datos
+
+    //Cantidad de aciertos por caracter, viene de escena de juego
     public int caracteresCorrectos;
     //Precision total, calculado en script
     public float precision;
     //Total de caracteres, viene de base de datos
+    //Se usa para poder calcular la precision
     public int totalCaracteres;
 
     //Para tiempo
-    //Variable de tiempo en segundos, recibe el tiempo en flotante, viene de base de datos
+
+    //Variable de tiempo en segundos, recibe el tiempo en flotante, viene de
+    //escena de juego
     public int tiempo;
     //Variable para almacenar la cantidad de minutos completos, se calcula en script
     public int minuto = 0;
@@ -38,10 +50,16 @@ public class Reporte : MonoBehaviour
     public int segundos = 0;
 
     //Para palabras por minuto
+
     //Total de palabras, viene de base de datos
     public int totalPalabras;
-    //Variable para almacenar el valor final de palabras por minuto, se calcula en script
+    //Variable para almacenar el valor final de palabras por minuto, se calcula
+    //en script
     public float palXMin;
+
+    //Variables para sobreescrituras
+    public int preciTemp;
+    public int tiempoTemp;
 
     //Variables para los outputs en pantalla
     public Text precisionOutput;
@@ -52,19 +70,21 @@ public class Reporte : MonoBehaviour
     void Start()
     {
         //Carga informacion a la escena
-        cargarDatos();
+        //Al ser post partida, la informacion no se recupera al instante
+        //que incia la escena
+        //cargarDatos();
 
         //Funcion para la precision
-        Precision();
+        //Precision();
 
         //Funcion de tiempo
-        TiempoTotal();
+        //TiempoTotal();
 
         //Funcion de palabras por minuto
-        PalabraXMinuto();
+        //PalabraXMinuto();
 
-        //En script pre partida, este esta setteado en true
-        prePartida = true;
+        //En script post partida, este esta setteado en false
+        prePartida = false;
 
         //Funcion para decidir que botones mostrar
         //If para seleccionar que grupo de botones van a aparecer en la escena
@@ -82,17 +102,18 @@ public class Reporte : MonoBehaviour
         }
     }
 
-    //Se cargan todos los datos de las PlayerPrefs
     public void cargarDatos()
     {
         //Version de prueba
         //Carga de info provisional
+        
         //Supuesto nivel
-        int nivelPrueba = 2;
-        PlayerPrefs.SetInt("nivelActual", nivelPrueba);
+        //int nivelPrueba = 2;
+        //PlayerPrefs.SetInt("nivelActual", nivelPrueba);
         //Es audio o no
-        bool audioPrueba = true;
-        PlayerPrefs.SetInt("varianteAudio" + nivelPrueba, audioPrueba ? 1 : 0);
+        //bool audioPrueba = true;
+        //PlayerPrefs.SetInt("varianteAudio" + nivelPrueba, audioPrueba ? 1 : 0);
+
 
         //prueba 1
         //normal
@@ -145,26 +166,86 @@ public class Reporte : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// acceso a los metodos
+    /// hago comparaciones
+    /// dejar carga datos en public en nuevo script
+    /// en nueveo scirot lo que venia de base de datos y se recyoera de la escena, se recupera con los metodos nuevos
+    /// </summary>
+
+
     public void Precision()
     {
+        //Este metodo va a recuperar informacion de base de datos y del nivel jugado para comparar cual es mejor y guardar el mejor
+        //Recuperacion de datos para calcular precision
+        
+        //Recuperacion de informacion desde el juego
+        int caracteresCorrectosTemp = objEscritura.aciertos;
+        Debug.Log("caracteresCorrectos desde nivel: " + caracteresCorrectosTemp);
+
+        //Recuperacion de informacion desde BD
+        //Definir numero de nivel y tipo de nivel
+        int nivel = PlayerPrefs.GetInt("nivelActual");
+        bool tipoAudio = PlayerPrefs.GetInt("varianteAudio" + nivel) == 1 ? true : false;
+        //Conseguir informacion del nivel
+        if (tipoAudio == true)
+        {
+            caracteresCorrectos = PlayerPrefs.GetInt("caracteresCorrectosAudio" + nivel);
+            totalCaracteres = PlayerPrefs.GetInt("totalCaracteres" + nivel);
+        }
+        else
+        {
+            caracteresCorrectos = PlayerPrefs.GetInt("caracteresCorrectos" + nivel);
+            totalCaracteres = PlayerPrefs.GetInt("totalCaracteres" + nivel);
+        }
+
+        //Calcular presicion de juego, esto es lo que debe de salir en el reporte, se compara mas adelante para ver si se sobreescribe o no
+        preciTemp = (100.0f / totalCaracteres) * caracteresCorrectosTemp;
+
+        //Calcular precision de BD
         //La precision se calcula con una regla de tres
         //El 100% se divide entre el total de caracteres, y es multiplicado por la cantidad de caracteres correctos
         precision = (100.0f / totalCaracteres) * caracteresCorrectos;
         //Para hacer que aparezcan menos decimales, primero se convierte en un string y se especifica la longitud de caracteres
-        string pres = precision.ToString("G3");
+        string pres = preciTemp.ToString("G3");
         //Despues se regresa a flotante
-        precision = Single.Parse(pres);
+        preciTemp = Single.Parse(pres);
         //Y el resultado se envia a la variable para el output
-        precisionOutput.text = "" + precision + "%";
+        precisionOutput.text = "" + preciTemp + "%";
     }
 
     public void TiempoTotal()
     {
-        //Para sacar el tiempo, vamos a convertir los segundos en el formato de mm:ss
+        //Recuperamos el tiempo del juego y de BD
+        
+        //Recuperamos del nivel
+        tiempoTemp = objEscritura.getTiempo();
+        Debug.Log("Tiempo del nivel: " + tiempoTemp);
+        
+        //Recuperamos de la base de datos
+        //Definir numero de nivel y tipo de nivel
+        int nivel = PlayerPrefs.GetInt("nivelActual");
+        bool tipoAudio = PlayerPrefs.GetInt("varianteAudio" + nivel) == 1 ? true : false;
+        //Conseguir informacion del nivel
+        if (tipoAudio == true)
+        {
+            tiempo = PlayerPrefs.GetInt("tiempoAudio" + nivel);
+        }
+        else
+        {
+            tiempo = PlayerPrefs.GetInt("tiempo" + nivel);
+        }
+
+        //Usa la temp para que sea la que se muestre en el reporte, aunque no sea la mejor, mas adelante se guarda si el criterio de mejor se cumple
+
+        //Para sacar el tiempo, vamos a convertir los segundos en el
+        //formato de mm:ss
         //Creo una variable auxiliar para poder calcular el tiempo
-        int aux = tiempo;
+        int aux = tiempoTemp;
         //El ciclo va restando de 60 en 60 (segundos) para sumar un minuto mientras el auxiliar sea mayor o igual a 60, es decir que completa un minuto
-        while (aux >= 60) {
+        while (aux >= 60)
+        {
             minuto++;
             aux = aux - 60;
         }
@@ -187,6 +268,25 @@ public class Reporte : MonoBehaviour
 
     public void PalabraXMinuto()
     {
+        //Aqui se queda asi, porque recibe el total de palabras de la base de datos, ya se calculo el tiempo en minutos y segundos
+        //antes, entonces se opera igual para poder mostrar el resultado en el reporte, sin necesidad de comparar con algo mas, o algo que llegue del nivel
+
+        //Definir numero de nivel y tipo de nivel
+        int nivel = PlayerPrefs.GetInt("nivelActual");
+        bool tipoAudio = PlayerPrefs.GetInt("varianteAudio" + nivel) == 1 ? true : false;
+
+        //Cargar información pertinente
+        if (tipoAudio == true)
+        {
+            //Descarga informacion de variantes de audio
+            totalPalabras = PlayerPrefs.GetInt("totalPalabras" + nivel);
+        }
+        else
+        {
+            //Descarga informacion de variantes normales
+            totalPalabras = PlayerPrefs.GetInt("totalPalabras" + nivel);
+        }
+
         //Constante para agregar los segundos sobrantes en su equivalente a un minuto para el calculo
         float temp = (segundos / 60.0f);
         //El valor en minutos de los segundos, se suma a los minutos completos
@@ -199,5 +299,18 @@ public class Reporte : MonoBehaviour
         palXMin = Single.Parse(pres);
         //Y el resultado se envia a la variable para el output
         palXMinOutput.text = "" + palXMin;
+    }
+
+    public void SobreEscribir()
+    {
+        //Sobreescribe la mejor partida si el precision/tiempo es mayor
+        if ((preciTemp / tiempoTemp) > (precision / tiempo))
+        {
+            //sobreescribe
+        }
+        else
+        {
+            //nada
+        }
     }
 }
