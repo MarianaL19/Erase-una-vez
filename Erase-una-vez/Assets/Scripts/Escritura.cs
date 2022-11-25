@@ -191,4 +191,9 @@ public class Escritura : MonoBehaviour
     {
         return tiempo;
     }
+
+    public int getAciertos()
+    {
+        return aciertos;
+    }
 }

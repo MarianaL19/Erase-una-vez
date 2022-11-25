@@ -58,7 +58,7 @@ public class ReportePostPartida : MonoBehaviour
     public float palXMin;
 
     //Variables para sobreescrituras
-    public int preciTemp;
+    public float preciTemp;
     public int tiempoTemp;
 
     //Variables para los outputs en pantalla
@@ -181,7 +181,7 @@ public class ReportePostPartida : MonoBehaviour
         //Recuperacion de datos para calcular precision
         
         //Recuperacion de informacion desde el juego
-        int caracteresCorrectosTemp = objEscritura.aciertos;
+        int caracteresCorrectosTemp = objEscritura.getAciertos();
         Debug.Log("caracteresCorrectos desde nivel: " + caracteresCorrectosTemp);
 
         //Recuperacion de informacion desde BD
