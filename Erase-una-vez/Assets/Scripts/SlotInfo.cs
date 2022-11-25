@@ -12,10 +12,12 @@ public class SlotInfo : MonoBehaviour
     [SerializeField] private GameObject estrella1;
     [SerializeField] private GameObject estrella2;
     [SerializeField] private GameObject estrella3;
+    [SerializeField] private GameObject medalla;
 
     public int noNivel;
     private int estrellas;
     private bool bloqueado;
+    private bool audioCompletado;
     // private Text tituloNivel;
 
     // Start is called before the first frame update
@@ -29,6 +31,7 @@ public class SlotInfo : MonoBehaviour
     {
         //Se inicializa como si el nivel SÍ ESTUVIERA bloqueado
         objEstrellas.gameObject.SetActive(false);
+        medalla.gameObject.SetActive(false);
 
         //Si no está bloqueado, se cambian algunos valores.
         if(bloqueado == false){
@@ -47,6 +50,11 @@ public class SlotInfo : MonoBehaviour
             }else if(estrellas == 2){
                 estrella3.gameObject.SetActive(false);
             }
+
+            //Si el audio NO está completado, oculte la medalla.
+            if(audioCompletado == true){
+                medalla.gameObject.SetActive(true);
+            }
         }
     }
     public void cargarDatos()
@@ -57,6 +65,7 @@ public class SlotInfo : MonoBehaviour
         //Nivel
         estrellas = PlayerPrefs.GetInt("estrellas" + noNivel);
         bloqueado = PlayerPrefs.GetInt("bloqueado" + noNivel)==1?true:false;
+        audioCompletado = PlayerPrefs.GetInt("audioCompletado" + noNivel)==1?true:false;
 
     }
 

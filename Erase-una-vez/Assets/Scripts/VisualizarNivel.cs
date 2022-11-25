@@ -27,8 +27,9 @@ public class VisualizarNivel : MonoBehaviour
     [SerializeField] private GameObject btnTexto;
     [SerializeField] private GameObject btnAudio;
 
-    //Si el nivel solo tiene texto, ocultaremos este apartado de cambio
+    //Objetos que contienen los botones de Audio y Texto (incluyendo su versión presionada y sin presionar)
     [SerializeField] private GameObject objBtnAudio;
+    [SerializeField] private GameObject objBtnTexto;
 
     //GameObject para bloquear la interacción con los botones cuando esté bloqueado
     [SerializeField] private GameObject bloquearPanelBotones;
@@ -45,6 +46,9 @@ public class VisualizarNivel : MonoBehaviour
     private bool trabalenguas;
     private int noEstrellas; //estrellas del usuario
 
+    //Bandera para establecer el estado del reporte
+    private bool reporteAbierto;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -58,10 +62,7 @@ public class VisualizarNivel : MonoBehaviour
         btnAudio.gameObject.SetActive(false);
         popUpCompra.enabled = false;
         canvasReporte.enabled = false;
-
-        if(trabalenguas == true){
-            objBtnAudio.gameObject.SetActive(false);
-        }
+        reporteAbierto = false;
     }
 
     void Update(){
@@ -114,13 +115,17 @@ public class VisualizarNivel : MonoBehaviour
         objBloquearAudio.gameObject.SetActive(false);
         objBloqueado.gameObject.SetActive(false);
 
+        //Inicializamos esto en true para preever un bug xd
+        objDesbloqueado.gameObject.SetActive(true);
+        objBtnTexto.gameObject.SetActive(true);
+        objBtnAudio.gameObject.SetActive(true);
+
         //Si el nivel seleccionado está bloqueado
         if(bloqueado == true){
             objBloqueado.gameObject.SetActive(true);
             botones.gameObject.SetActive(false);
             objDesbloqueado.gameObject.SetActive(false);
             bloquearPanelBotones.gameObject.SetActive(true);
-
         }
         //Si está desbloqueado y no está en el modo de la variante audio
         else if(bloqueado == false && varianteAudio == false){
@@ -152,6 +157,20 @@ public class VisualizarNivel : MonoBehaviour
             btnAudio.gameObject.SetActive(true);
         }
 
+        //Si el reporte está abierto desactiva la vista del nivel
+        if(reporteAbierto == true && bloqueado == false)
+        {
+            objDesbloqueado.gameObject.SetActive(false);
+            objBtnTexto.gameObject.SetActive(false);
+            objBtnAudio.gameObject.SetActive(false);
+        }
+
+        //Si el nivel es un trabalenguas desactiva el botón de audio
+        if(trabalenguas == true){
+        objBtnAudio.gameObject.SetActive(false);
+        }
+
+        //Calcula las estrellas activas en el nivel
         inicializarInfo();
     }
 
@@ -199,9 +218,9 @@ public class VisualizarNivel : MonoBehaviour
 
     public void comprarNivelAudio()
     {
-        if(noEstrellas >= 2){
+        if(noEstrellas >= 3){
             print(noEstrellas);
-            noEstrellas = noEstrellas - 2;
+            noEstrellas = noEstrellas - 3;
             bloqueadoAudio = false;
             objBloquearAudio.gameObject.SetActive(false);
         }else{
@@ -216,11 +235,13 @@ public class VisualizarNivel : MonoBehaviour
 
     public void abrirReporte()
     {
+        reporteAbierto = true;
         canvasReporte.enabled = true;
     }
 
     public void cerrarReporte()
     {
+        reporteAbierto = false;
         canvasReporte.enabled = false;
     }
 }

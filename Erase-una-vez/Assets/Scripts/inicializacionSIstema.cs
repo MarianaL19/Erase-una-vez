@@ -9,8 +9,6 @@ public class inicializacionSIstema : MonoBehaviour
     public int[] arregloNoErrores = new int[5];
     public int[] arregloTiempoCompletado = new int[5];
     public int[] arregloTrabalenguas = new int[5];
-    public int[] arregloPrimerCambioDibujo = new int[5];
-    public int[] arregloSegundoCambioDibujo = new int[5];
 
 
     void Awake()
