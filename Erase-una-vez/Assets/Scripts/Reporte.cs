@@ -8,10 +8,18 @@ using System.Text;
 public class Reporte : MonoBehaviour
 {
     //Version mejorada para el reporte que sale al finalizar un nivel
+    //Script para mostrar pre-partida
 
-    //NOTA: Terminar la parte de recibir informacion de otras escenas.
-    //NOTA: Implementar como saber de que ventana viene el jugador para saber que
-    //      tipo de reporte mostrar.
+
+    /// <summary>
+    /// objeto escritura
+    /// lo meto en el script nuevo
+    /// acceso a los metodos
+    /// hago comparaciones
+    /// dejar carga datos en public en nuevo script
+    /// en nueveo scirot lo que venia de base de datos y se recyoera de la escena, se recupera con los metodos nuevos
+    /// </summary>
+
 
     //VARIABLES
 
@@ -43,7 +51,7 @@ public class Reporte : MonoBehaviour
 
     //Variable de tiempo en segundos, recibe el tiempo en flotante, viene de base
     //de datos
-    public float tiempo;
+    public int tiempo;
     //Variable para almacenar la cantidad de minutos completos, se calcula en script
     public int minuto = 0;
     //Variable para almacenar la cantidad de segundos sueltos, se calcula en script
@@ -65,39 +73,35 @@ public class Reporte : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Version de debug para mostrar que inicio correctamente y recorre
-        //las funciones satisfactoriamente
-        Debug.Log("Comienza carga de datos");
+        //Carga informacion a la escena
         cargarDatos();
-        Debug.Log("Los datos se cargaron");
-        Debug.Log("Hola, comenzamos");
-        Precision();
-        Debug.Log("Precision() termino correctamente");
-        TiempoTotal();
-        Debug.Log("TiempoTotal() termino correctamente");
-        PalabraXMinuto();
-        Debug.Log("PalabraXMinuto() termino correctamente");
 
-        //Se va a setear en esta funcion
+        //Funcion para la precision
+        Precision();
+
+        //Funcion de tiempo
+        TiempoTotal();
+
+        //Funcion de palabras por minuto
+        PalabraXMinuto();
+
+        //En script pre partida, este esta setteado en true
         prePartida = true;
 
-        //Aqui tentaticamente iria la funcion para saber que botones mostrar
+        //Funcion para decidir que botones mostrar
         //If para seleccionar que grupo de botones van a aparecer en la escena
         if (prePartida == true)
         {
             //Aparecen los botones para el reporte pre-partida
-            Debug.Log("Mostrar prepartida");
             objPre.gameObject.SetActive(true);
             objPost.gameObject.SetActive(false);
         }
         else
         {
             //Aparecen los botonoes para el reporte post-partida
-            Debug.Log("Mostrar postpartida");
             objPre.gameObject.SetActive(false);
             objPost.gameObject.SetActive(true);
         }
-        Debug.Log("Estado de prepartida: " + prePartida);
     }
 
     // Update is called once per frame
@@ -109,28 +113,66 @@ public class Reporte : MonoBehaviour
     //Se cargan todos los datos de las PlayerPrefs
     public void cargarDatos()
     {
-        int numNivel = 1;
         //Version de prueba
-        //VERSION DE PRUEBA GUARDA Y LEE AQUI MISMO
-        PlayerPrefs.SetInt("caracteresCorrectos" + numNivel, 600);
-        Debug.Log("se subio caracteresCorrectos");
-        PlayerPrefs.SetInt("totalCaracteres" + numNivel, 600);
-        Debug.Log("se subio totalCaracteres");
-        PlayerPrefs.SetFloat("tiempo" + numNivel, 120.0000f);
-        Debug.Log("se subio tiempo");
-        PlayerPrefs.SetInt("totalPalabras" + numNivel, 12000);
-        Debug.Log("se subio totalPalabras");
-        Debug.Log("Los datos se cargaron en playerpref");
+        //Carga de info provisional
+        
+        //Supuesto nivel
+        int nivelPrueba = 2;
+        PlayerPrefs.SetInt("nivelActual", nivelPrueba);
+        //Es audio o no
+        bool audioPrueba = true;
+        PlayerPrefs.SetInt("varianteAudio" + nivelPrueba, audioPrueba ? 1 : 0);
 
-        //Lectura de datos desde playerprefs
-        caracteresCorrectos = PlayerPrefs.GetInt("caracteresCorrectos" + numNivel);
-        Debug.Log("se descargo caracteresCorrectos");
-        totalCaracteres = PlayerPrefs.GetInt("totalCaracteres" + numNivel);
-        Debug.Log("se descargo totalCaracteres");
-        tiempo = PlayerPrefs.GetFloat("tiempo" + numNivel);
-        Debug.Log("se descargo tiempo");
-        totalPalabras = PlayerPrefs.GetInt("totalPalabras" + numNivel);
-        Debug.Log("se descargo totalPalabras");
+
+        //prueba 1
+        //normal
+        //PlayerPrefs.SetInt("caracteresCorrectos" + nivelPrueba, 642);
+        //PlayerPrefs.SetInt("totalCaracteres" + nivelPrueba, 951);
+        //PlayerPrefs.SetInt("tiempo" + nivelPrueba, 157);
+        //PlayerPrefs.SetInt("totalPalabras" + nivelPrueba, 152);
+        //audio
+        //PlayerPrefs.SetInt("caracteresCorrectosAudio" + nivelPrueba, 752);
+        //PlayerPrefs.SetInt("totalCaracteres" + nivelPrueba, 800);
+        //PlayerPrefs.SetInt("tiempoAudio" + nivelPrueba, 184);
+        //PlayerPrefs.SetInt("totalPalabras" + nivelPrueba, 147);
+
+        //Prueba 2
+        //normal
+        //PlayerPrefs.SetInt("caracteresCorrectos" + nivelPrueba, 600);
+        //PlayerPrefs.SetInt("totalCaracteres" + nivelPrueba, 800);
+        //PlayerPrefs.SetInt("tiempo" + nivelPrueba, 120);
+        //PlayerPrefs.SetInt("totalPalabras" + nivelPrueba, 110);
+        //audio
+        //PlayerPrefs.SetInt("caracteresCorrectosAudio" + nivelPrueba, 452);
+        //PlayerPrefs.SetInt("totalCaracteres" + nivelPrueba, 600);
+        //PlayerPrefs.SetInt("tiempoAudio" + nivelPrueba, 160);
+        //PlayerPrefs.SetInt("totalPalabras" + nivelPrueba, 110);
+
+
+        //Carga informacion
+        //Recibir de que nivel viene
+        int numNivel = PlayerPrefs.GetInt("nivelActual");
+
+        //Verificar audio o normal
+        bool audio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
+
+        //Cargar información pertinente
+        if (audio == true)
+        {
+            //Descarga informacion de variantes de audio
+            caracteresCorrectos = PlayerPrefs.GetInt("caracteresCorrectosAudio" + numNivel);
+            totalCaracteres = PlayerPrefs.GetInt("totalCaracteres" + numNivel);
+            tiempo = PlayerPrefs.GetInt("tiempoAudio" + numNivel);
+            totalPalabras = PlayerPrefs.GetInt("totalPalabras" + numNivel);
+        }
+        else
+        {
+            //Descarga informacion de variantes normales
+            caracteresCorrectos = PlayerPrefs.GetInt("caracteresCorrectos" + numNivel);
+            totalCaracteres = PlayerPrefs.GetInt("totalCaracteres" + numNivel);
+            tiempo = PlayerPrefs.GetInt("tiempo" + numNivel);
+            totalPalabras = PlayerPrefs.GetInt("totalPalabras" + numNivel);
+        }
     }
 
     public void Precision()
@@ -139,14 +181,11 @@ public class Reporte : MonoBehaviour
         //El 100% se divide entre el total de caracteres, y es multiplicado por la
         //cantidad de caracteres correctos
         precision = (100.0f / totalCaracteres) * caracteresCorrectos;
-        Debug.Log("precision: " + precision);
         //Para hacer que aparezcan menos decimales, primero se convierte en un string
         //y se especifica la longitud de caracteres
         string pres = precision.ToString("G3");
-        Debug.Log("prueba: " + pres);
         //Despues se regresa a flotante
         precision = Single.Parse(pres);
-        Debug.Log("precision: " + precision);
         //Y el resultado se envia a la variable para el output
         precisionOutput.text = "" + precision + "%";
     }
@@ -157,19 +196,16 @@ public class Reporte : MonoBehaviour
         //formato de mm:ss
         
         //Creo una variable auxiliar para poder calcular el tiempo
-        int aux = (int)tiempo;
+        int aux = tiempo;
         //El ciclo va restando de 60 en 60 (segundos) para sumar un
         //minuto mientras el auxiliar sea mayor o igual a 60, es decir que
         //completa un minuto
         while (aux >= 60) {
             minuto++;
             aux = aux - 60;
-            Debug.Log("un minuto mas: " + minuto);
         }
         //El sobrante de aux se pasa a los segundos sueltos
         segundos = aux;
-        Debug.Log("minutos: " + minuto);
-        Debug.Log("segundos: " + segundos);
         //Para resolver lo del formato, es una condicional que concatena de
         //manera para que salga bonito el formato del reloj
         if (segundos >= 10)
@@ -191,20 +227,15 @@ public class Reporte : MonoBehaviour
         //Constante para agregar los segundos sobrantes en su equivalente a un
         //minuto para el calculo
         float temp = (segundos / 60.0f);
-        Debug.Log("segundos en minutos: " + temp);
         //El valor en minutos de los segundos, se suma a los minutos completos
         temp = temp + minuto;
-        Debug.Log("dios ya: " + temp);
         //Calculo de las palabras por minuto
         palXMin = totalPalabras / temp;
-        Debug.Log("palxmin: " + palXMin);
         //Para hacer que aparezcan menos decimales, primero se convierte en un string
         //y se especifica la longitud de caracteres
         string pres = palXMin.ToString("G2");
-        Debug.Log("plm: " + pres);
         //Despues se regresa a flotante
         palXMin = Single.Parse(pres);
-        Debug.Log("plm: " + palXMin);
         //Y el resultado se envia a la variable para el output
         palXMinOutput.text = "" + palXMin;
     }
