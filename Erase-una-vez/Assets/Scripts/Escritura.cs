@@ -37,6 +37,8 @@ public class Escritura : MonoBehaviour
         colorLetra = configuracion.getColorLetra();
         wordOutput.fontSize = configuracion.getTamanioLetra();
 
+
+
         erroresSeguidos = 0;
 
         jugando = true;
@@ -47,8 +49,9 @@ public class Escritura : MonoBehaviour
         lineaImagen[1] = 3;
         lineaImagen[2] = 10;
 
-        //Leo todas las lineas del archivo y las almaceno en un arreglo        
-        foreach (string line in System.IO.File.ReadLines(@"Assets/Textos/PruebaTexto.txt"))
+        //Leo todas las lineas del archivo y las almaceno en un arreglo
+        Debug.Log(PlayerPrefs.GetInt("noNivel"));
+        foreach (string line in System.IO.File.ReadLines(@"Assets/Textos/" + PlayerPrefs.GetInt("noNivel") + ".txt"))
         {
             texto[totalLineas] = line;
             totalLineas++;
