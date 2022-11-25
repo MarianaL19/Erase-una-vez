@@ -21,17 +21,25 @@ public class Reporte : MonoBehaviour
     [SerializeField] private GameObject objPre;
     [SerializeField] private GameObject objPost;
 
+    //Variables para identificar nivel
+    public int numNivel;
+    public bool audio;
+
     //Para Precision
     //Cantidad de aciertos por caracter, viene de base de datos
     public int caracteresCorrectos;
+    //Cantidad de aciertos por caracter en audio, viene de base de datos
+    public int caracteresCorrectosAudio;
     //Precision total, calculado en script
     public float precision;
     //Total de caracteres, viene de base de datos
     public int totalCaracteres;
 
     //Para tiempo
-    //Variable de tiempo en segundos, recibe el tiempo en flotante, viene de base de datos
+    //Variable de tiempo en segundos, viene de base de datos
     public int tiempo;
+    //Variable de tiempo en segundos del audio, viene de base de datos
+    public int tiempoAudio;
     //Variable para almacenar la cantidad de minutos completos, se calcula en script
     public int minuto = 0;
     //Variable para almacenar la cantidad de segundos sueltos, se calcula en script
@@ -88,10 +96,10 @@ public class Reporte : MonoBehaviour
         //Version de prueba
         //Carga de info provisional
         //Supuesto nivel
-        int nivelPrueba = 2;
+        int nivelPrueba = 1;
         PlayerPrefs.SetInt("nivelActual", nivelPrueba);
         //Es audio o no
-        bool audioPrueba = true;
+        bool audioPrueba = false;
         PlayerPrefs.SetInt("varianteAudio" + nivelPrueba, audioPrueba ? 1 : 0);
 
         //prueba 1
@@ -121,18 +129,18 @@ public class Reporte : MonoBehaviour
 
         //Carga informacion
         //Recibir de que nivel viene
-        int numNivel = PlayerPrefs.GetInt("nivelActual");
+        numNivel = PlayerPrefs.GetInt("nivelActual");
 
         //Verificar audio o normal
-        bool audio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
+        audio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
 
         //Cargar información pertinente
         if (audio == true)
         {
             //Descarga informacion de variantes de audio
-            caracteresCorrectos = PlayerPrefs.GetInt("caracteresCorrectosAudio" + numNivel);
+            caracteresCorrectosAudio = PlayerPrefs.GetInt("caracteresCorrectosAudio" + numNivel);
             totalCaracteres = PlayerPrefs.GetInt("totalCaracteres" + numNivel);
-            tiempo = PlayerPrefs.GetInt("tiempoAudio" + numNivel);
+            tiempoAudio = PlayerPrefs.GetInt("tiempoAudio" + numNivel);
             totalPalabras = PlayerPrefs.GetInt("totalPalabras" + numNivel);
         }
         else
@@ -149,7 +157,18 @@ public class Reporte : MonoBehaviour
     {
         //La precision se calcula con una regla de tres
         //El 100% se divide entre el total de caracteres, y es multiplicado por la cantidad de caracteres correctos
-        precision = (100.0f / totalCaracteres) * caracteresCorrectos;
+
+        //Verifica que valor tomar
+        if (audio == true)
+        {
+            //Settea en base al valor del audio
+            precision = (100.0f / totalCaracteres) * caracteresCorrectosAudio;
+        }
+        else
+        {
+            //Settea en base al valor de nivel normal
+            precision = (100.0f / totalCaracteres) * caracteresCorrectos;
+        }
         //Para hacer que aparezcan menos decimales, primero se convierte en un string y se especifica la longitud de caracteres
         string pres = precision.ToString("G3");
         //Despues se regresa a flotante
@@ -162,7 +181,18 @@ public class Reporte : MonoBehaviour
     {
         //Para sacar el tiempo, vamos a convertir los segundos en el formato de mm:ss
         //Creo una variable auxiliar para poder calcular el tiempo
-        int aux = tiempo;
+        int aux;
+        //Verificar que valor tomar
+        if (audio == true)
+        {
+            //Settea en base al valor del audio
+            aux = tiempoAudio;
+        }
+        else
+        {
+            //Settea en base al valor de nivel normal
+            aux = tiempo;
+        }
         //El ciclo va restando de 60 en 60 (segundos) para sumar un minuto mientras el auxiliar sea mayor o igual a 60, es decir que completa un minuto
         while (aux >= 60) {
             minuto++;
