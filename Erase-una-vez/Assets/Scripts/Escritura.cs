@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Escritura : MonoBehaviour
 {
     public Text wordOutput = null; //salida de texto
+    [SerializeField] private AudioSource audioNivel;
 
     private const int MAX_ERRORES_SEGUIDOS = 20;
 
@@ -18,6 +19,7 @@ public class Escritura : MonoBehaviour
     private int tiempo;
     private bool errorActual;
     private bool jugando;
+    private bool esAudio;
 
     private int[] lineaImagen = new int[3];
 
@@ -31,30 +33,43 @@ public class Escritura : MonoBehaviour
     public Configuracion configuracion; //Objeto de configuracion para poder obtener los valores del texto y volumen
     public PanelesNivel panelesNivel;
 
+    public int nivelAJugar;
+
     void Start()
     {
         //leemos de configuracion el color y el tamaño del texto
         colorLetra = configuracion.getColorLetra();
         wordOutput.fontSize = configuracion.getTamanioLetra();
 
-
-
         erroresSeguidos = 0;
+
+        //esAudio = PlayerPrefs.GetInt("varianteAudio"+ PlayerPrefs.GetInt("nivelActual")) == 1 ? true : false;
+        esAudio = true;
 
         jugando = true;
         InvokeRepeating("Cronometro", 0f, 1f);//inicia el conteo del tiempo, lo vamos a cambiar para iniciarlo cuando se quite la pantalla de tutorial
 
         //Asignamos en que linea del archivo debería cambiarse el dibujo de fondo, valores hardcodeados por ahora
         lineaImagen[0] = 0;
-        lineaImagen[1] = 3;
-        lineaImagen[2] = 10;
+        lineaImagen[1] = 999;
+        lineaImagen[2] = 999;
 
         //Leo todas las lineas del archivo y las almaceno en un arreglo
         Debug.Log(PlayerPrefs.GetInt("noNivel"));
-        foreach (string line in System.IO.File.ReadLines(@"Assets/Textos/" + PlayerPrefs.GetInt("noNivel") + ".txt"))
+        int contadorLineas = 1;
+        foreach (string line in System.IO.File.ReadLines(@"Assets/Textos/" + nivelAJugar + ".txt")) //PlayerPrefs.GetInt("nivelActual")
         {
-            texto[totalLineas] = line;
-            totalLineas++;
+            if(line == "\\") //Leemos si la línea tiene solamente la diagonal invertida, en cuyo caso en esa línea se cambia la imagen
+            {
+                lineaImagen[contadorLineas] = totalLineas;
+                contadorLineas++;
+            }
+            else //Si no es una linea normal de texto que se debe escribir
+            {
+                texto[totalLineas] = line;
+                totalLineas++;
+                audioNivel.Play();
+            }
         }
 
         SetPalabraActual();
@@ -99,7 +114,14 @@ public class Escritura : MonoBehaviour
         //Aquí actualizamos lo que se muestra en pantalla
         oracionRestante =  palabraActualizada;
         string palabraMostrar = "<color=\"" + colorLetra[0] + "\">" + palabraActualizada + "</color>";
-        wordOutput.text = palabraAntigua + "|" + palabraMostrar;
+        if (!esAudio)
+        {
+            wordOutput.text = palabraAntigua + "|" + palabraMostrar;
+        }
+        else
+        {
+            wordOutput.text = palabraAntigua;
+        }
     }
 
     private void Update()
