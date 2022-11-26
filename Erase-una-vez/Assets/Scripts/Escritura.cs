@@ -20,18 +20,22 @@ public class Escritura : MonoBehaviour
     private bool errorActual;
     private bool jugando;
     private bool esAudio;
+    private int numeroNivel;
 
     private int[] lineaImagen = new int[3];
 
     private string[] colorLetra = new string[3]; 
     private string[] texto = new string[30]; //Guardamos todas las lineas de texto que tenga el archivo
-    private int numLineaActual = 0; //contador de la liena que estamos mostrando en pantalla actualmente
+    private int numLineaActual = 0; //contador de la linea que estamos mostrando en pantalla actualmente
     private int totalLineas = 0; //Total de lineas leidas del archivo
      
     private bool activo; //Bandera para no poder escribir mientras se cambia el texto
 
     public Configuracion configuracion; //Objeto de configuracion para poder obtener los valores del texto y volumen
-    public PanelesNivel panelesNivel;
+    public Pausa controlPaneles;
+    public ReportePostPartida reporte;
+    public Image imagenFondo;
+    private Sprite[] Ilustraciones = new Sprite[3];
 
     public int nivelAJugar;
 
@@ -43,8 +47,15 @@ public class Escritura : MonoBehaviour
 
         erroresSeguidos = 0;
 
+        //Cargamos las ilustraciones que se van a mostrar
+        //Ilustraciones[0] = Resources.Load(nivelAJugar + "/1" , typeof(Sprite)) as Sprite;
+        Ilustraciones[0] = Resources.Load<Sprite>(nivelAJugar + "/1");
+        Ilustraciones[1] = Resources.Load<Sprite>(nivelAJugar + "/2");
+        Ilustraciones[2] = Resources.Load<Sprite>(nivelAJugar + "/3");
+        //var sprite = Resources.Load<Sprite>("Sprites/sprite01");
+
         //esAudio = PlayerPrefs.GetInt("varianteAudio"+ PlayerPrefs.GetInt("nivelActual")) == 1 ? true : false;
-        esAudio = true;
+        esAudio = false;
 
         jugando = true;
         InvokeRepeating("Cronometro", 0f, 1f);//inicia el conteo del tiempo, lo vamos a cambiar para iniciarlo cuando se quite la pantalla de tutorial
@@ -68,10 +79,11 @@ public class Escritura : MonoBehaviour
             {
                 texto[totalLineas] = line;
                 totalLineas++;
-                audioNivel.Play();
+                if(esAudio)
+                    audioNivel.Play();
             }
         }
-
+        imagenFondo.sprite = Ilustraciones[0];
         SetPalabraActual();
     }
     private void SetPalabraActual()
@@ -82,9 +94,13 @@ public class Escritura : MonoBehaviour
         {
             Debug.Log("Ya acabaste al chile");
             jugando = false;
+            activo = false;
             Debug.Log("Aciertos: " + aciertos);
             Debug.Log("Errores: " + errores);
             Debug.Log("Tiempo: " + tiempo);
+
+            reporte.GenerarReporte();
+            controlPaneles.GanarNivel();
         }
         else if(numLineaActual == 0)
         {
@@ -101,10 +117,12 @@ public class Escritura : MonoBehaviour
         {
             //Aquí cambiamos la imagen de fondo por el segundo dibujo, el primer dibujo lo ponemos desde el start
             Debug.Log("Imagen: Las casas de paja y madera construidas, mientras dos cerditos juegan y el tercero sigue construyendo la casa de ladrillos.");
+            imagenFondo.sprite = Ilustraciones[1];
         }
         if (numLineaActual == lineaImagen[2])
         {
             //Aquí cambiamos la imagen de fondo por el tercer dibujo
+            imagenFondo.sprite = Ilustraciones[2];
             Debug.Log("Imagen: Las casas de paja y madera destruidas, mientras que los tres festejan afuera de la casa de ladrillo, con el lobo desmayado.");
         }
     }
@@ -207,6 +225,11 @@ public class Escritura : MonoBehaviour
     public void iniciarTiempo()
     {
         jugando = true;
+    }
+
+    public void detenerTiempo()
+    {
+        jugando = false;
     }
 
     public int getTiempo()

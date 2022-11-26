@@ -6244,6 +6244,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: VisualizarNivel, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 292479442558891826, guid: 42bf1f7aedb876944961bf2ee2adce81, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 292479442841406426, guid: 42bf1f7aedb876944961bf2ee2adce81, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -6291,6 +6295,10 @@ PrefabInstance:
     - target: {fileID: 292479442841406429, guid: 42bf1f7aedb876944961bf2ee2adce81, type: 3}
       propertyPath: m_Name
       value: Reporte
+      objectReference: {fileID: 0}
+    - target: {fileID: 9126229277949263650, guid: 42bf1f7aedb876944961bf2ee2adce81, type: 3}
+      propertyPath: prePartida
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42bf1f7aedb876944961bf2ee2adce81, type: 3}

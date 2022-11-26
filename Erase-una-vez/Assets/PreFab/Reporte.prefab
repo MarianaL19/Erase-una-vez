@@ -353,6 +353,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 292479442558891827}
+  - component: {fileID: 1364009131644423747}
   m_Layer: 0
   m_Name: Reporte_Post
   m_TagString: Untagged
@@ -377,6 +378,42 @@ Transform:
   m_Father: {fileID: 356938419499795662}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1364009131644423747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292479442558891826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a589bdbaed8519419f777aca4495d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objEscritura: {fileID: 0}
+  prePartida: 0
+  objPre: {fileID: 292479442748861100}
+  objPost: {fileID: 292479442558891826}
+  numNivel: 0
+  audio: 0
+  caracteresCorrectos: 0
+  caracteresCorrectosAudio: 0
+  precision: 0
+  totalCaracteres: 0
+  tiempo: 0
+  tiempoAudio: 0
+  minuto: 0
+  segundos: 0
+  totalPalabras: 0
+  palXMin: 0
+  preciTemp: 0
+  tiempoTemp: 0
+  tiempoAudioTemp: 0
+  caracteresCorrectosTemp: 0
+  caracteresCorrectosAudioTemp: 0
+  precisionOutput: {fileID: 6397626060036801024}
+  tiempoOutput: {fileID: 5538046162445007488}
+  palXMinOutput: {fileID: 3457313200395527100}
 --- !u!1 &292479442748861100
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,6 +423,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 292479442748861101}
+  - component: {fileID: 9126229277949263650}
   m_Layer: 0
   m_Name: Reporte_Pre
   m_TagString: Untagged
@@ -410,6 +448,36 @@ Transform:
   m_Father: {fileID: 356938419499795662}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9126229277949263650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292479442748861100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad33808e0f3964e4091c9f86f7088bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prePartida: 0
+  objPre: {fileID: 292479442748861100}
+  objPost: {fileID: 292479442558891826}
+  numNivel: 0
+  audio: 0
+  caracteresCorrectos: 0
+  caracteresCorrectosAudio: 0
+  precision: 0
+  totalCaracteres: 0
+  tiempo: 0
+  tiempoAudio: 0
+  minuto: 0
+  segundos: 0
+  totalPalabras: 0
+  palXMin: 0
+  precisionOutput: {fileID: 6397626060036801024}
+  tiempoOutput: {fileID: 5538046162445007488}
+  palXMinOutput: {fileID: 3457313200395527100}
 --- !u!1 &292479442757901135
 GameObject:
   m_ObjectHideFlags: 0
@@ -1277,7 +1345,6 @@ GameObject:
   - component: {fileID: 6666808016161916182}
   - component: {fileID: 3328771270625337838}
   - component: {fileID: 8269007149532981002}
-  - component: {fileID: 9221981809182620176}
   m_Layer: 0
   m_Name: Contenedor_Interior
   m_TagString: Untagged
@@ -1343,32 +1410,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &9221981809182620176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5917502358907310412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad33808e0f3964e4091c9f86f7088bf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prePartida: 0
-  objPre: {fileID: 292479442748861100}
-  objPost: {fileID: 292479442558891826}
-  caracteresCorrectos: 0
-  precision: 0
-  totalCaracteres: 0
-  tiempo: 0
-  minuto: 0
-  segundos: 0
-  totalPalabras: 0
-  palXMin: 0
-  precisionOutput: {fileID: 6397626060036801024}
-  tiempoOutput: {fileID: 5538046162445007488}
-  palXMinOutput: {fileID: 3457313200395527100}
 --- !u!1 &6014740227135920258
 GameObject:
   m_ObjectHideFlags: 0

@@ -209,6 +209,7 @@ public class ReportePostPartida : MonoBehaviour
             //Recuepera de base de datos
             caracteresCorrectos = PlayerPrefs.GetInt("caracteresCorrectos" + numNivel);
             totalCaracteres = PlayerPrefs.GetInt("totalCaracteres" + numNivel);
+            Debug.Log("Total de caracteres de playerprefs: " + totalCaracteres);
 
             //Calcular precision temporal, salida del juego
             preciTemp = (100.0f / totalCaracteres) * caracteresCorrectosTemp;
@@ -291,6 +292,9 @@ public class ReportePostPartida : MonoBehaviour
 
         //Cargar información pertinente
         totalPalabras = PlayerPrefs.GetInt("totalPalabras" + numNivel);
+
+        Debug.Log("Palabras totales desde playerprefs: "+totalPalabras);
+        Debug.Log("Numero de nivel: " + numNivel);
         
         //Constante para agregar los segundos sobrantes en su equivalente a un minuto para el calculo
         float temp = (segundos / 60.0f);
@@ -330,5 +334,13 @@ public class ReportePostPartida : MonoBehaviour
         {
             Debug.Log("NO hubo cambio");
         }
+    }
+
+    public void GenerarReporte()
+    {
+        Precision();
+        SobreEscribir();
+        PalabraXMinuto();
+        TiempoTotal();
     }
 }
