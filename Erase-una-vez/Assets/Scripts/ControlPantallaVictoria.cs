@@ -11,29 +11,34 @@ public class ControlPantallaVictoria : MonoBehaviour
     [SerializeField] private GameObject estrella2;
     [SerializeField] private GameObject estrella3;
     [SerializeField] private GameObject panelReporte;
+    [SerializeField] private GameObject panelVictoria;
     [SerializeField] private Escritura escritura;
 
     public void Start()
     {
-        textoAudio.SetActive(false);
-        estrellas.SetActive(false);
-        estrella1.SetActive(false);
-        estrella2.SetActive(false);
-        estrella3.SetActive(false);
     }
     public void NivelFinalizado()
     {
         bool audio = false;
-        int estrellasMostrar= 1; 
+        int estrellasMostrar= 1;
         //PlayerPrefs.GetInt("varianteAudio") == 1;
         if(audio)
         {
             textoAudio.SetActive(true);
+            estrellas.SetActive(false);
+            estrella1.SetActive(false);
+            estrella2.SetActive(false);
+            estrella3.SetActive(false);
+
         }
         else
         {
+            textoAudio.SetActive(false);
+            estrella2.SetActive(false);
+            estrella3.SetActive(false);
             estrellas.SetActive(true);
             estrella1.SetActive(true);
+
             int tiempo = escritura.getTiempo();
             int aciertos = escritura.getAciertos();
             if (tiempo < 50)
@@ -45,7 +50,6 @@ public class ControlPantallaVictoria : MonoBehaviour
             if(estrellasMostrar>2)
                 estrella3.SetActive(true);
         }
-
     }
 
     public void Menu()
@@ -54,6 +58,7 @@ public class ControlPantallaVictoria : MonoBehaviour
     }
     public void Reporte()
     {
+        panelVictoria.SetActive(false);
         panelReporte.SetActive(true);
     }
     public void Reiniciar()

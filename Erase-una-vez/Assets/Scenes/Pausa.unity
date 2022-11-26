@@ -370,5 +370,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pausa
       objectReference: {fileID: 0}
+    - target: {fileID: 6139577700760086857, guid: 905782ef0a5dacc47ac44b822f250f6f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 905782ef0a5dacc47ac44b822f250f6f, type: 3}

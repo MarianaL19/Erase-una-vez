@@ -36,6 +36,7 @@ public class Escritura : MonoBehaviour
     public ReportePostPartida reporte;
     public Image imagenFondo;
     private Sprite[] Ilustraciones = new Sprite[3];
+    private AudioClip[] audiosTexto = new AudioClip[30];
 
     public int nivelAJugar;
 
@@ -49,15 +50,15 @@ public class Escritura : MonoBehaviour
 
         //Cargamos las ilustraciones que se van a mostrar
         //Ilustraciones[0] = Resources.Load(nivelAJugar + "/1" , typeof(Sprite)) as Sprite;
-        Ilustraciones[0] = Resources.Load<Sprite>(nivelAJugar + "/1");
-        Ilustraciones[1] = Resources.Load<Sprite>(nivelAJugar + "/2");
-        Ilustraciones[2] = Resources.Load<Sprite>(nivelAJugar + "/3");
-        //var sprite = Resources.Load<Sprite>("Sprites/sprite01");
+        Ilustraciones[0] = Resources.Load<Sprite>("Ilustraciones/" + nivelAJugar + "/1");
+        Ilustraciones[1] = Resources.Load<Sprite>("Ilustraciones/" + nivelAJugar + "/2");
+        Ilustraciones[2] = Resources.Load<Sprite>("Ilustraciones/" + nivelAJugar + "/3");
 
         //esAudio = PlayerPrefs.GetInt("varianteAudio"+ PlayerPrefs.GetInt("nivelActual")) == 1 ? true : false;
         esAudio = false;
 
-        jugando = true;
+        activo = false;
+
         InvokeRepeating("Cronometro", 0f, 1f);//inicia el conteo del tiempo, lo vamos a cambiar para iniciarlo cuando se quite la pantalla de tutorial
 
         //Asignamos en que linea del archivo debería cambiarse el dibujo de fondo, valores hardcodeados por ahora
@@ -79,10 +80,14 @@ public class Escritura : MonoBehaviour
             {
                 texto[totalLineas] = line;
                 totalLineas++;
-                if(esAudio)
-                    audioNivel.Play();
             }
         }
+
+        for(int i=0; i<contadorLineas; i++)
+        {
+            audiosTexto[i] = Resources.Load<AudioClip>("Audios/" + nivelAJugar + "/" + (i+1));
+        }
+
         imagenFondo.sprite = Ilustraciones[0];
         SetPalabraActual();
     }
@@ -105,7 +110,6 @@ public class Escritura : MonoBehaviour
         else if(numLineaActual == 0)
         {
             ActualizarMensaje();
-            activo = true;
         }
         else
         {
@@ -139,6 +143,7 @@ public class Escritura : MonoBehaviour
         else
         {
             wordOutput.text = palabraAntigua;
+
         }
     }
 
@@ -174,7 +179,6 @@ public class Escritura : MonoBehaviour
         QuitarLetra(); //Quitamos la letra de la cadena independientemente de si fue acierto o error
         if (oracionRestante.Length == 0){ //Verificamos que no haya terminado de escribir la oracion y si lo hizo la cambiamos
             SetPalabraActual();
-            //panelesNivel.activarPanel();
         }
             
     }
@@ -207,6 +211,13 @@ public class Escritura : MonoBehaviour
     {   //Esperamos para que se alcance a ver si la última letra de una oración se escribió bien o mal.
         yield return new WaitForSeconds(.3f);
         ActualizarMensaje();
+        activo = true;
+    }
+
+    IEnumerator ActivarTeclado()
+    {
+        yield return new WaitForSeconds(.5f);
+        activo = true;
     }
 
     private void ActualizarMensaje()
@@ -214,7 +225,8 @@ public class Escritura : MonoBehaviour
         SetOracionRestante(texto[numLineaActual], "");
         oracionPasada = "";
         numLineaActual++;
-        activo = true;
+        if(esAudio)
+            audioNivel.PlayOneShot(audiosTexto[numLineaActual - 1]);
     }
     void Cronometro()
     {
@@ -225,11 +237,13 @@ public class Escritura : MonoBehaviour
     public void iniciarTiempo()
     {
         jugando = true;
+        StartCoroutine("ActivarTeclado");
     }
 
     public void detenerTiempo()
     {
         jugando = false;
+        activo = false;
     }
 
     public int getTiempo()
