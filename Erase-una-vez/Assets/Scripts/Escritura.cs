@@ -20,7 +20,6 @@ public class Escritura : MonoBehaviour
     private bool errorActual;
     private bool jugando;
     public bool esAudio;
-    private int numeroNivel;
 
     private int[] lineaImagen = new int[3];
 
@@ -42,6 +41,32 @@ public class Escritura : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("noNivel: " + PlayerPrefs.GetInt("noNivel"));
+        Debug.Log("nivelActual: " + PlayerPrefs.GetInt("nivelActual"));
+
+        int[] totalCaracteres = new int[5]{183, 130, 900, 867, 717};
+        int[] totalPalabras = new int[5] {31, 24, 166, 156, 132 };
+        int[] tiempoCompletado = new int[5] {200, 200, 200, 200, 200 };
+        int[] noErrores = new int[5] {81, 60, 405, 390, 324};
+
+        for(int i=1; i<=5; i++)
+        {
+            PlayerPrefs.SetInt("totalCaracteres" + i, totalCaracteres[i-1]);
+            PlayerPrefs.SetInt("totalPalabras" + i, totalPalabras[i - 1]);
+            PlayerPrefs.SetInt("tiempoCompletado" + i, tiempoCompletado[i - 1]);
+            PlayerPrefs.SetInt("noErrores" + i, noErrores[i - 1]);
+            PlayerPrefs.Save();
+        }
+
+        for(int i=1; i<=5; i++)
+        {
+            Debug.Log("Total de caracteres: "+ i + " " + PlayerPrefs.GetInt("totalCaracteres"+i));
+            Debug.Log("Total de palabras: " + i + " " + PlayerPrefs.GetInt("totalPalabras" + i));
+            Debug.Log("Tiempo completado: " + i + " " + PlayerPrefs.GetInt("tiempoCompletado" + i));
+            Debug.Log("Numero de erorres: " + i + " " + PlayerPrefs.GetInt("noErrores" + i));
+            Debug.Log("\n");
+        }
+
         //leemos de configuracion el color y el tamaño del texto
         colorLetra = configuracion.getColorLetra();
         wordOutput.fontSize = configuracion.getTamanioLetra();
@@ -56,22 +81,6 @@ public class Escritura : MonoBehaviour
 
         //esAudio = PlayerPrefs.GetInt("varianteAudio"+ PlayerPrefs.GetInt("nivelActual")) == 1 ? true : false;
         
-        int tiempoPasado;
-        int aciertosPasados;
-
-        if (!esAudio)
-        {
-            tiempoPasado = PlayerPrefs.GetInt("tiempo" + nivelAJugar);
-            aciertosPasados = PlayerPrefs.GetInt("caracteresCorrectos" + nivelAJugar);
-        }
-        else
-        {
-            tiempoPasado = PlayerPrefs.GetInt("tiempoA" + nivelAJugar);
-            aciertosPasados = PlayerPrefs.GetInt("caracteresCorrectosA" + nivelAJugar);
-        }
-        Debug.Log("Mejor tiempo:" + tiempoPasado);
-        Debug.Log("Mejores aciertos:" + aciertosPasados);
-
         activo = false;
 
         InvokeRepeating("Cronometro", 0f, 1f);//inicia el conteo del tiempo, lo vamos a cambiar para iniciarlo cuando se quite la pantalla de tutorial
@@ -82,7 +91,6 @@ public class Escritura : MonoBehaviour
         lineaImagen[2] = 999;
 
         //Leo todas las lineas del archivo y las almaceno en un arreglo
-        Debug.Log(PlayerPrefs.GetInt("noNivel"));
         int contadorLineas = 1;
         foreach (string line in System.IO.File.ReadLines(@"Assets/Textos/" + nivelAJugar + ".txt")) //PlayerPrefs.GetInt("nivelActual")
         {
@@ -97,7 +105,6 @@ public class Escritura : MonoBehaviour
                 totalLineas++;
             }
         }
-
         imagenFondo.sprite = Ilustraciones[0];
         SetPalabraActual();
     }
@@ -120,11 +127,15 @@ public class Escritura : MonoBehaviour
             {
                 tiempoPasado = PlayerPrefs.GetInt("tiempo" + nivelAJugar);
                 aciertosPasados = PlayerPrefs.GetInt("caracteresCorrectos" + nivelAJugar);
+                Debug.Log("tiempo de playerprefs" + tiempoPasado);
+                Debug.Log("aciertos de playerprefs" + aciertosPasados);
             }
             else
             {
                 tiempoPasado = PlayerPrefs.GetInt("tiempoA" + nivelAJugar);
                 aciertosPasados = PlayerPrefs.GetInt("caracteresCorrectosA" + nivelAJugar);
+                Debug.Log("tiempo de playerprefs" + tiempoPasado);
+                Debug.Log("aciertos de playerprefs" + aciertosPasados);
             }
             float resultadoAnterior;
             if (tiempoPasado != 0)
@@ -138,15 +149,15 @@ public class Escritura : MonoBehaviour
                 if (!esAudio)
                 {
                     Debug.Log("Debería guardar resultados");
-                    PlayerPrefs.SetInt("caracteresCorrectos" + numeroNivel, aciertos);
-                    PlayerPrefs.SetInt("tiempo" + numeroNivel, tiempo);
+                    PlayerPrefs.SetInt("caracteresCorrectos" + nivelAJugar, aciertos);
+                    PlayerPrefs.SetInt("tiempo" + nivelAJugar, tiempo);
                     PlayerPrefs.Save();
                 }
                 else
                 {
                     Debug.Log("Debería guardar resultados audio");
-                    PlayerPrefs.SetInt("caracteresCorrectosA" + numeroNivel, aciertos);
-                    PlayerPrefs.SetInt("tiempoA" + numeroNivel, tiempo);
+                    PlayerPrefs.SetInt("caracteresCorrectosA" + nivelAJugar, aciertos);
+                    PlayerPrefs.SetInt("tiempoA" + nivelAJugar, tiempo);
                     PlayerPrefs.Save(); 
                 }
                 

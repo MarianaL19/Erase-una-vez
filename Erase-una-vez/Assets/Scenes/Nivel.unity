@@ -598,12 +598,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wordOutput: {fileID: 1996393546}
   audioNivel: {fileID: 386902089}
-  esAudio: 1
+  esAudio: 0
   configuracion: {fileID: 451169868}
   controlPaneles: {fileID: 1198665093}
   reporte: {fileID: 543839088}
   imagenFondo: {fileID: 1648953313}
-  nivelAJugar: 4
+  nivelAJugar: 1
 --- !u!4 &386902088
 Transform:
   m_ObjectHideFlags: 0
@@ -748,7 +748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 799254329952267411, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 10.8267
+      value: 10.826721
       objectReference: {fileID: 0}
     - target: {fileID: 799254329952267411, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_AnchoredPosition.y

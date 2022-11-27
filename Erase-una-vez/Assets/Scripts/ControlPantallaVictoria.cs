@@ -16,7 +16,7 @@ public class ControlPantallaVictoria : MonoBehaviour
 
     //Variable para identificar nivel
     public int numNivel;
-    public bool audio;
+    public bool esAudio;
     public int estrellaPrecision;
     public int estrellaTiempo;
     public int estrellasTotales;
@@ -31,7 +31,7 @@ public class ControlPantallaVictoria : MonoBehaviour
         numNivel = PlayerPrefs.GetInt("nivelActual");
 
         //Verificar audio o normal
-        audio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
+        esAudio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
 
         //Recuperamos las estrellas del nivel
         estrellaPrecision = PlayerPrefs.GetInt("estrellaPrecision" + numNivel); // Recupero si la estrella de precisión ya fue desbloqueada    
@@ -52,7 +52,7 @@ public class ControlPantallaVictoria : MonoBehaviour
 
         int estrellasMostrar= 1;
         //PlayerPrefs.GetInt("varianteAudio") == 1;
-        if(audio)
+        if(esAudio)
         {
             textoAudio.SetActive(true);
             estrellas.SetActive(false);

@@ -28,7 +28,7 @@ public class ReportePostPartida : MonoBehaviour
 
     //Variable para identificar nivel
     public int numNivel;
-    public bool audio;
+    public bool esAudio;
 
     //Para Precision
 
@@ -153,10 +153,10 @@ public class ReportePostPartida : MonoBehaviour
         numNivel = PlayerPrefs.GetInt("nivelActual");
 
         //Verificar audio o normal
-        audio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
+        esAudio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
 
         //Cargar información pertinente
-        if (audio == true)
+        if (esAudio == true)
         {
             //Descarga informacion de variantes de audio
             caracteresCorrectosAudio = PlayerPrefs.GetInt("caracteresCorrectosAudio" + numNivel);
@@ -187,10 +187,10 @@ public class ReportePostPartida : MonoBehaviour
         numNivel = PlayerPrefs.GetInt("nivelActual");
 
         //Verificar audio o normal
-        audio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
+        esAudio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
 
         //Verificar procedencia, audio o normal
-        if (audio == true)
+        if (esAudio == true)
         {
             //Settea en base al valor de audio
 
@@ -242,13 +242,13 @@ public class ReportePostPartida : MonoBehaviour
         numNivel = PlayerPrefs.GetInt("nivelActual");
 
         //Verificar audio o normal
-        audio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
+        esAudio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
 
         //Creo una variable auxiliar para poder calcular el tiempo
         int aux;
 
         //Verificar procedencia, audio o normal
-        if (audio == true)
+        if (esAudio == true)
         {
             //Settea en base valores de audio
 
@@ -310,7 +310,7 @@ public class ReportePostPartida : MonoBehaviour
         numNivel = PlayerPrefs.GetInt("nivelActual");
 
         //Verificar audio o normal
-        audio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
+        esAudio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
 
         //Cargar información pertinente
         totalPalabras = PlayerPrefs.GetInt("totalPalabras" + numNivel);
@@ -323,6 +323,8 @@ public class ReportePostPartida : MonoBehaviour
         //El valor en minutos de los segundos, se suma a los minutos completos
         temp = temp + minuto;
         //Calculo de las palabras por minuto
+        Debug.Log("Tiempo: " + temp);
+
         palXMin = totalPalabras / temp;
         //Para hacer que aparezcan menos decimales, primero se convierte en un string y se especifica la longitud de caracteres
         string pres = palXMin.ToString("G2");
@@ -339,13 +341,13 @@ public class ReportePostPartida : MonoBehaviour
         numNivel = PlayerPrefs.GetInt("nivelActual");
 
         //Verificar audio o normal
-        audio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
+        esAudio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
 
         //Sobreescribe la mejor partida si el precision/tiempo es mayor que la almacenada en BD
         if ((preciTemp / tiempoTemp) > (precision / tiempo))
         {
             //Sobreescribir si precision/tiempo que vienen del juego son mayores
-            if (audio == true)
+            if (esAudio == true)
             {
                 //Cambia informacion de variantes de audio
                 PlayerPrefs.SetInt("caracteresCorrectosAudio" + numNivel, caracteresCorrectosTemp);
