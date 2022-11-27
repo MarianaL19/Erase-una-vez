@@ -370,8 +370,8 @@ public class ReportePostPartida : MonoBehaviour
     public void GenerarReporte()
     {
         Precision();
-        SobreEscribir();
-        PalabraXMinuto();
         TiempoTotal();
+        PalabraXMinuto();
+        SobreEscribir();
     }
 }
