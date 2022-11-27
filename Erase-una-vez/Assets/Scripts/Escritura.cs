@@ -43,6 +43,7 @@ public class Escritura : MonoBehaviour
     {
         Debug.Log("noNivel: " + PlayerPrefs.GetInt("noNivel"));
         Debug.Log("nivelActual: " + PlayerPrefs.GetInt("nivelActual"));
+        nivelAJugar = PlayerPrefs.GetInt("nivelActual");
 
         int[] totalCaracteres = new int[5]{183, 130, 900, 867, 717};
         int[] totalPalabras = new int[5] {31, 24, 166, 156, 132 };
