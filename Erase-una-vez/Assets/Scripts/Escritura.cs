@@ -292,7 +292,8 @@ public class Escritura : MonoBehaviour
     {
         jugando = true;
         audioClip = Resources.Load<AudioClip>("Audios/" + nivelAJugar + "/" + (numLineaActual));
-        audioNivel.PlayOneShot(audioClip);
+        if(esAudio)
+            audioNivel.PlayOneShot(audioClip);
         StartCoroutine("ActivarTeclado");
 
     }
