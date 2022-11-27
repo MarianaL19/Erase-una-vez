@@ -5,14 +5,15 @@ using UnityEngine;
 public class Tutorial : MonoBehaviour
 {
     [SerializeField] private GameObject ventanaTutorial;
-    [SerializeField] private Escritura escritura;
+    [SerializeField] public Escritura escritura;
 
     void Update()
     {
+        
         if (Input.anyKeyDown)
-        {
-            ventanaTutorial.SetActive(false);
+        {    
             escritura.iniciarTiempo();
+            ventanaTutorial.SetActive(false);
         }
     }
 }

@@ -21,7 +21,7 @@ public class Pausa : MonoBehaviour
         panelAjustes.enabled = false;
         panelVictoria.SetActive(false);
         panelReporte.SetActive(false);
-        //mensajePerdiste.enabled = false;
+        panelReiniciar.enabled = false;
     }
 
     // Update is called once per frame
@@ -66,5 +66,10 @@ public class Pausa : MonoBehaviour
         pantallaVictoria.NivelFinalizado();
     }
 
+    public void PerderNivel()
+    {
+        enabled = false;
+        panelReiniciar.enabled = true;
+    }
     
 }

@@ -201,6 +201,9 @@ public class Escritura : MonoBehaviour
         if (erroresSeguidos > MAX_ERRORES_SEGUIDOS)
         {
             Debug.Log("Perdiste al chile");
+            activo = false;
+            jugando = false;
+            controlPaneles.PerderNivel();
         }
 
         string newString = oracionRestante.Remove(0, 1); //Quitamos la ultima letra
