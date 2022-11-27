@@ -51,7 +51,7 @@ public class SlotInfo : MonoBehaviour
                 estrella3.gameObject.SetActive(false);
             }
 
-            //Si el audio NO está completado, oculte la medalla.
+            //Si el audio está completado, muestre la medalla.
             if(audioCompletado == true){
                 medalla.gameObject.SetActive(true);
             }
