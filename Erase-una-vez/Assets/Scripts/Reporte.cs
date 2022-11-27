@@ -23,7 +23,7 @@ public class Reporte : MonoBehaviour
 
     //Variables para identificar nivel
     public int numNivel;
-    public bool audio;
+    public bool esAudio;
 
     //Para Precision
     //Cantidad de aciertos por caracter, viene de base de datos
@@ -132,10 +132,10 @@ public class Reporte : MonoBehaviour
         numNivel = PlayerPrefs.GetInt("nivelActual");
 
         //Verificar audio o normal
-        audio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
+        esAudio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
 
         //Cargar información pertinente
-        if (audio == true)
+        if (esAudio == true)
         {
             //Descarga informacion de variantes de audio
             caracteresCorrectosAudio = PlayerPrefs.GetInt("caracteresCorrectosAudio" + numNivel);
@@ -159,7 +159,7 @@ public class Reporte : MonoBehaviour
         //El 100% se divide entre el total de caracteres, y es multiplicado por la cantidad de caracteres correctos
 
         //Verifica que valor tomar
-        if (audio == true)
+        if (esAudio == true)
         {
             //Settea en base al valor del audio
             precision = (100.0f / totalCaracteres) * caracteresCorrectosAudio;
@@ -183,7 +183,7 @@ public class Reporte : MonoBehaviour
         //Creo una variable auxiliar para poder calcular el tiempo
         int aux;
         //Verificar que valor tomar
-        if (audio == true)
+        if (esAudio == true)
         {
             //Settea en base al valor del audio
             aux = tiempoAudio;
