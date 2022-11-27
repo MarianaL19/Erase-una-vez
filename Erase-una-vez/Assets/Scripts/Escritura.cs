@@ -19,7 +19,7 @@ public class Escritura : MonoBehaviour
     private int tiempo;
     private bool errorActual;
     private bool jugando;
-    private bool esAudio;
+    public bool esAudio;
     private int numeroNivel;
 
     private int[] lineaImagen = new int[3];
@@ -36,7 +36,7 @@ public class Escritura : MonoBehaviour
     public ReportePostPartida reporte;
     public Image imagenFondo;
     private Sprite[] Ilustraciones = new Sprite[3];
-    private AudioClip[] audiosTexto = new AudioClip[30];
+    private AudioClip audioClip;
 
     public int nivelAJugar;
 
@@ -55,7 +55,22 @@ public class Escritura : MonoBehaviour
         Ilustraciones[2] = Resources.Load<Sprite>("Ilustraciones/" + nivelAJugar + "/3");
 
         //esAudio = PlayerPrefs.GetInt("varianteAudio"+ PlayerPrefs.GetInt("nivelActual")) == 1 ? true : false;
-        esAudio = false;
+        
+        int tiempoPasado;
+        int aciertosPasados;
+
+        if (!esAudio)
+        {
+            tiempoPasado = PlayerPrefs.GetInt("tiempo" + nivelAJugar);
+            aciertosPasados = PlayerPrefs.GetInt("caracteresCorrectos" + nivelAJugar);
+        }
+        else
+        {
+            tiempoPasado = PlayerPrefs.GetInt("tiempoA" + nivelAJugar);
+            aciertosPasados = PlayerPrefs.GetInt("caracteresCorrectosA" + nivelAJugar);
+        }
+        Debug.Log("Mejor tiempo:" + tiempoPasado);
+        Debug.Log("Mejores aciertos:" + aciertosPasados);
 
         activo = false;
 
@@ -83,11 +98,6 @@ public class Escritura : MonoBehaviour
             }
         }
 
-        for(int i=0; i<contadorLineas; i++)
-        {
-            audiosTexto[i] = Resources.Load<AudioClip>("Audios/" + nivelAJugar + "/" + (i+1));
-        }
-
         imagenFondo.sprite = Ilustraciones[0];
         SetPalabraActual();
     }
@@ -103,9 +113,48 @@ public class Escritura : MonoBehaviour
             Debug.Log("Aciertos: " + aciertos);
             Debug.Log("Errores: " + errores);
             Debug.Log("Tiempo: " + tiempo);
+            int tiempoPasado;
+            int aciertosPasados;
+
+            if (!esAudio)
+            {
+                tiempoPasado = PlayerPrefs.GetInt("tiempo" + nivelAJugar);
+                aciertosPasados = PlayerPrefs.GetInt("caracteresCorrectos" + nivelAJugar);
+            }
+            else
+            {
+                tiempoPasado = PlayerPrefs.GetInt("tiempoA" + nivelAJugar);
+                aciertosPasados = PlayerPrefs.GetInt("caracteresCorrectosA" + nivelAJugar);
+            }
+            float resultadoAnterior;
+            if (tiempoPasado != 0)
+                resultadoAnterior = aciertosPasados / tiempoPasado;
+            else
+                resultadoAnterior = 0;
+            
+            float resultado = aciertos/tiempo;
+            if (resultado > resultadoAnterior)
+            {
+                if (!esAudio)
+                {
+                    Debug.Log("Debería guardar resultados");
+                    PlayerPrefs.SetInt("caracteresCorrectos" + numeroNivel, aciertos);
+                    PlayerPrefs.SetInt("tiempo" + numeroNivel, tiempo);
+                    PlayerPrefs.Save();
+                }
+                else
+                {
+                    Debug.Log("Debería guardar resultados audio");
+                    PlayerPrefs.SetInt("caracteresCorrectosA" + numeroNivel, aciertos);
+                    PlayerPrefs.SetInt("tiempoA" + numeroNivel, tiempo);
+                    PlayerPrefs.Save(); 
+                }
+                
+            }
 
             reporte.GenerarReporte();
             controlPaneles.GanarNivel();
+
         }
         else if(numLineaActual == 0)
         {
@@ -227,9 +276,11 @@ public class Escritura : MonoBehaviour
     {
         SetOracionRestante(texto[numLineaActual], "");
         oracionPasada = "";
+        if (esAudio && numLineaActual!=0) {
+            audioClip = Resources.Load<AudioClip>("Audios/" + nivelAJugar + "/" + (numLineaActual+1));
+            audioNivel.PlayOneShot(audioClip);
+        }
         numLineaActual++;
-        if(esAudio)
-            audioNivel.PlayOneShot(audiosTexto[numLineaActual - 1]);
     }
     void Cronometro()
     {
@@ -238,6 +289,14 @@ public class Escritura : MonoBehaviour
     }
 
     public void iniciarTiempo()
+    {
+        jugando = true;
+        audioClip = Resources.Load<AudioClip>("Audios/" + nivelAJugar + "/" + (numLineaActual));
+        audioNivel.PlayOneShot(audioClip);
+        StartCoroutine("ActivarTeclado");
+
+    }
+    public void reanudarTiempo()
     {
         jugando = true;
         StartCoroutine("ActivarTeclado");

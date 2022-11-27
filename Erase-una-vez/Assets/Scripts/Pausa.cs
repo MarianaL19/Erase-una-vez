@@ -40,7 +40,7 @@ public class Pausa : MonoBehaviour
 
     public void Despausar()
     {
-        controlJuego.iniciarTiempo();
+        controlJuego.reanudarTiempo();
         panelPausa.enabled = false;
     }
 
