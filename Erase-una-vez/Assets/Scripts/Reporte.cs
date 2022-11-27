@@ -96,11 +96,11 @@ public class Reporte : MonoBehaviour
         //Version de prueba
         //Carga de info provisional
         //Supuesto nivel
-        int nivelPrueba = 1;
-        PlayerPrefs.SetInt("nivelActual", nivelPrueba);
+        //int nivelPrueba = 1;
+        //PlayerPrefs.SetInt("nivelActual", nivelPrueba);
         //Es audio o no
-        bool audioPrueba = false;
-        PlayerPrefs.SetInt("varianteAudio" + nivelPrueba, audioPrueba ? 1 : 0);
+        //bool audioPrueba = false;
+        //PlayerPrefs.SetInt("varianteAudio" + nivelPrueba, audioPrueba ? 1 : 0);
 
         //prueba 1
         //normal
