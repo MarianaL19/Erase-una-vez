@@ -182,6 +182,13 @@ public class ReportePostPartida : MonoBehaviour
         //La precision se calcula con una regla de tres
         //El 100% se divide entre el total de caracteres, y es multiplicado por la cantidad de caracteres correctos
 
+        //Carga informacion
+        //Recibir de que nivel viene
+        numNivel = PlayerPrefs.GetInt("nivelActual");
+
+        //Verificar audio o normal
+        audio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
+
         //Verificar procedencia, audio o normal
         if (audio == true)
         {
@@ -229,6 +236,14 @@ public class ReportePostPartida : MonoBehaviour
     public void TiempoTotal()
     {
         //Para sacar el tiempo, vamos a convertir los segundos en el formato de mm:ss
+
+        //Carga informacion
+        //Recibir de que nivel viene
+        numNivel = PlayerPrefs.GetInt("nivelActual");
+
+        //Verificar audio o normal
+        audio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
+
         //Creo una variable auxiliar para poder calcular el tiempo
         int aux;
 
@@ -290,6 +305,13 @@ public class ReportePostPartida : MonoBehaviour
         //Aqui se queda asi, porque recibe el total de palabras de la base de datos, ya se calculo el tiempo en minutos y segundos
         //antes, entonces se opera igual para poder mostrar el resultado en el reporte, sin necesidad de comparar con algo mas, o algo que llegue del nivel
 
+        //Carga informacion
+        //Recibir de que nivel viene
+        numNivel = PlayerPrefs.GetInt("nivelActual");
+
+        //Verificar audio o normal
+        audio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
+
         //Cargar información pertinente
         totalPalabras = PlayerPrefs.GetInt("totalPalabras" + numNivel);
 
@@ -312,6 +334,13 @@ public class ReportePostPartida : MonoBehaviour
 
     public void SobreEscribir()
     {
+        //Carga informacion
+        //Recibir de que nivel viene
+        numNivel = PlayerPrefs.GetInt("nivelActual");
+
+        //Verificar audio o normal
+        audio = PlayerPrefs.GetInt("varianteAudio" + numNivel) == 1 ? true : false;
+
         //Sobreescribe la mejor partida si el precision/tiempo es mayor que la almacenada en BD
         if ((preciTemp / tiempoTemp) > (precision / tiempo))
         {
