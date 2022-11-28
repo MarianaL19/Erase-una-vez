@@ -371,7 +371,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -161.29, y: -114.82}
+  m_AnchoredPosition: {x: -164.22, y: -83}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &799254329861321325
@@ -1051,10 +1051,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 799254329909621492}
   m_HandleRect: {fileID: 799254329796698369}
   m_Direction: 0
-  m_MinValue: 20
-  m_MaxValue: 120
+  m_MinValue: 30
+  m_MaxValue: 50
   m_WholeNumbers: 1
-  m_Value: 67
+  m_Value: 35
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1824,7 +1824,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -86.85899, y: -54.977894}
+  m_AnchoredPosition: {x: -86.859, y: -19.147}
   m_SizeDelta: {x: 204.7224, y: 38.2942}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &799254331338879210
@@ -1982,7 +1982,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -7.075, y: -112.76}
+  m_AnchoredPosition: {x: -4.146, y: -82.587}
   m_SizeDelta: {x: 264.29, y: 50.826}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &799254331369202853
@@ -2220,7 +2220,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 113, y: -54}
+  m_AnchoredPosition: {x: 113, y: -20.125}
   m_SizeDelta: {x: 195, y: 40.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &799254331373574284
@@ -2375,7 +2375,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 169.57999, y: -113.17401}
+  m_AnchoredPosition: {x: 169.57999, y: -83}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &799254331390660178
@@ -3018,8 +3018,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.291, y: 32.576}
-  m_SizeDelta: {x: 601.45, y: 136.8137}
+  m_AnchoredPosition: {x: 0, y: 51.937}
+  m_SizeDelta: {x: 453.9804, y: 66.1258}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4019619005044946968
 CanvasRenderer:
@@ -3051,7 +3051,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 120
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -3062,7 +3062,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Prueba del tama\xF1o de texto"
+  m_Text: "Prueba del tama\xF1o."
 --- !u!1 &3413282176321990572
 GameObject:
   m_ObjectHideFlags: 0

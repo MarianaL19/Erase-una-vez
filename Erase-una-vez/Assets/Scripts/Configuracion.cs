@@ -135,10 +135,10 @@ public class Configuracion : MonoBehaviour
 
     public void aumentarFuente()
     {
-        tamLetra += 10;
+        tamLetra += 5;
     }
     public void reducirFuente()
     {
-        tamLetra -= 10;
+        tamLetra -= 5;
     }
 }
