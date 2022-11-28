@@ -60,7 +60,7 @@ public class VisualizarNivel : MonoBehaviour
     
     void Start()
     {
-        miniatura = Resources.Load<Sprite>("Ilustraciones/" + nivelActual + "/miniatura");
+        miniatura = Resources.Load<Sprite>("Miniaturas/" + nivelActual);
         imagenFondo[0].sprite = miniatura;
         imagenFondo[1].sprite = miniatura;
 
