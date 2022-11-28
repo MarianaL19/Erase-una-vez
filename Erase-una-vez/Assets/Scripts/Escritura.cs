@@ -19,6 +19,7 @@ public class Escritura : MonoBehaviour
     private int tiempo;
     private bool errorActual;
     private bool jugando;
+    private int maxErroresSeguidos;
     public bool esAudio;
 
     private int[] lineaImagen = new int[3];
@@ -44,11 +45,14 @@ public class Escritura : MonoBehaviour
         Debug.Log("noNivel: " + PlayerPrefs.GetInt("noNivel"));
         Debug.Log("nivelActual: " + PlayerPrefs.GetInt("nivelActual"));
         nivelAJugar = PlayerPrefs.GetInt("nivelActual");
+        esAudio = PlayerPrefs.GetInt("varianteAudio"+nivelAJugar) == 1 ? true : false;
+        maxErroresSeguidos = PlayerPrefs.GetInt("noErrores"+nivelAJugar);
+        Debug.Log("noErrores: " + maxErroresSeguidos);
 
-        int[] totalCaracteres = new int[5]{183, 130, 900, 867, 717};
-        int[] totalPalabras = new int[5] {31, 24, 166, 156, 132 };
+        /*int[] totalCaracteres = new int[5]{ 130, 183, 900, 867, 717};
+        int[] totalPalabras = new int[5] { 24, 31, 166, 156, 132 };
         int[] tiempoCompletado = new int[5] {200, 200, 200, 200, 200 };
-        int[] noErrores = new int[5] {81, 60, 405, 390, 324};
+        int[] noErrores = new int[5] { 60, 81, 405, 390, 324};
 
         for(int i=1; i<=5; i++)
         {
@@ -66,7 +70,7 @@ public class Escritura : MonoBehaviour
             Debug.Log("Tiempo completado: " + i + " " + PlayerPrefs.GetInt("tiempoCompletado" + i));
             Debug.Log("Numero de erorres: " + i + " " + PlayerPrefs.GetInt("noErrores" + i));
             Debug.Log("\n");
-        }
+        }*/
 
         //leemos de configuracion el color y el tamaño del texto
         colorLetra = configuracion.getColorLetra();
@@ -180,6 +184,7 @@ public class Escritura : MonoBehaviour
 
         if (numLineaActual == lineaImagen[1])
         {
+
             //Aquí cambiamos la imagen de fondo por el segundo dibujo, el primer dibujo lo ponemos desde el start
             Debug.Log("Imagen: Las casas de paja y madera construidas, mientras dos cerditos juegan y el tercero sigue construyendo la casa de ladrillos.");
             imagenFondo.sprite = Ilustraciones[1];
@@ -213,6 +218,7 @@ public class Escritura : MonoBehaviour
         //Leemos los valores de configuración para detectar cambios
         wordOutput.fontSize = configuracion.getTamanioLetra();
         colorLetra = configuracion.getColorLetra();
+
 
         //Capturamos que presione las teclas y verificamos que si puede escribir
         if (Input.anyKeyDown && activo)
@@ -259,9 +265,15 @@ public class Escritura : MonoBehaviour
         }
 
         //Aquí habría una función para reiniciar el nivel si se superan los errores seguidos, ahorita nomas le decimos que perdió
-        if (erroresSeguidos > MAX_ERRORES_SEGUIDOS)
+        if (erroresSeguidos > (maxErroresSeguidos/3))
         {
             Debug.Log("Perdiste al chile");
+            activo = false;
+            jugando = false;
+            controlPaneles.PerderNivel();
+        }
+        if(errores >= maxErroresSeguidos)
+        {
             activo = false;
             jugando = false;
             controlPaneles.PerderNivel();
