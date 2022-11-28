@@ -101,11 +101,12 @@ public class ControlPantallaVictoria : MonoBehaviour
             precision = (100.0f / totalCaracteres) * aciertos;
             Debug.Log("Precisión total: " + precision);
 
-            if (tiempo < 300){
+            if (tiempo < 250){
 
                 //Validación para no dar la estrella de nuevo
                 if(estrellaTiempo == 0){ 
                     estrellasTotales++; 
+                    PlayerPrefs.SetInt("estrellas" + numNivel, 2);
                 }
 
                 estrellasMostrar++;
@@ -118,6 +119,7 @@ public class ControlPantallaVictoria : MonoBehaviour
                 //Validación para no dar la estrella de nuevo
                 if(estrellaPrecision == 0){
                     estrellasTotales++;
+                    PlayerPrefs.SetInt("estrellas" + numNivel, 2);
                 }
 
                 estrellasMostrar++; 
@@ -136,6 +138,11 @@ public class ControlPantallaVictoria : MonoBehaviour
                 
             if(estrellasMostrar>2){
                 estrella3.SetActive(true);
+            }
+
+            //Validación para mostrar estrellas en nivel
+            if(estrellaPrecision == 1 && estrellaTiempo == 1){
+                PlayerPrefs.SetInt("estrellas" + numNivel, 3);
             }
 
             //Logs para ver si las estrellas son otorgadas
