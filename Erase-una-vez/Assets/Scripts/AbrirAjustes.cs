@@ -6,6 +6,9 @@ public class AbrirAjustes : MonoBehaviour
 {
     [SerializeField] private GameObject ajustes;
 
+    void Start(){
+        ajustes.gameObject.SetActive(false);
+    }
 
     public void abrirAjustes()
     {
