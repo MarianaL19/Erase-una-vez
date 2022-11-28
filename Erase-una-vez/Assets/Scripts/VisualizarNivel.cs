@@ -34,6 +34,9 @@ public class VisualizarNivel : MonoBehaviour
     //GameObject para bloquear la interacción con los botones cuando esté bloqueado
     [SerializeField] private GameObject bloquearPanelBotones;
 
+    //Objetos para la miniatura
+    public Image[] imagenFondo = new Image[2];
+    private Sprite miniatura;
 
     //Variables para asignar los valores del Archivo Lógico del nivel
 
@@ -57,6 +60,10 @@ public class VisualizarNivel : MonoBehaviour
     
     void Start()
     {
+        miniatura = Resources.Load<Sprite>("Ilustraciones/" + nivelActual + "/miniatura");
+        imagenFondo[0].sprite = miniatura;
+        imagenFondo[1].sprite = miniatura;
+
         inicializarNivel();
         btnTexto.gameObject.SetActive(false);
         btnAudio.gameObject.SetActive(false);
