@@ -217,17 +217,25 @@ public class Reporte : MonoBehaviour
 
     public void PalabraXMinuto()
     {
-        //Constante para agregar los segundos sobrantes en su equivalente a un minuto para el calculo
-        float temp = (segundos / 60.0f);
-        //El valor en minutos de los segundos, se suma a los minutos completos
-        temp = temp + minuto;
-        //Calculo de las palabras por minuto
-        palXMin = totalPalabras / temp;
-        //Para hacer que aparezcan menos decimales, primero se convierte en un string y se especifica la longitud de caracteres
-        string pres = palXMin.ToString("G2");
-        //Despues se regresa a flotante
-        palXMin = Single.Parse(pres);
-        //Y el resultado se envia a la variable para el output
-        palXMinOutput.text = "" + palXMin;
+        //Validacion para mostrar 0 en caso de que no haya jugado antes el nivel
+        if (segundos == 0 && minuto == 0)
+        {
+            palXMinOutput.text = "0";
+        }
+        else
+        {
+            //Constante para agregar los segundos sobrantes en su equivalente a un minuto para el calculo
+            float temp = (segundos / 60.0f);
+            //El valor en minutos de los segundos, se suma a los minutos completos
+            temp = temp + minuto;
+            //Calculo de las palabras por minuto
+            palXMin = totalPalabras / temp;
+            //Para hacer que aparezcan menos decimales, primero se convierte en un string y se especifica la longitud de caracteres
+            string pres = palXMin.ToString("G2");
+            //Despues se regresa a flotante
+            palXMin = Single.Parse(pres);
+            //Y el resultado se envia a la variable para el output
+            palXMinOutput.text = "" + palXMin;
+        }
     }
 }
