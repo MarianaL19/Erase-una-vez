@@ -10,7 +10,7 @@ public class Escritura : MonoBehaviour
 
     private const int MAX_ERRORES_SEGUIDOS = 20;
 
-    private string oracionRestante = string.Empty; //Oración que no ha sido escrita
+    private string oracionRestante = string.Empty; //Oraciï¿½n que no ha sido escrita
     private string oracionPasada = string.Empty; //Oracion que ya fue escrita que queremos mostrar en la pantalla
 
     private int aciertos;
@@ -72,7 +72,7 @@ public class Escritura : MonoBehaviour
             Debug.Log("\n");
         }*/
 
-        //leemos de configuracion el color y el tamaño del texto
+        //leemos de configuracion el color y el tamaï¿½o del texto
         colorLetra = configuracion.getColorLetra();
         wordOutput.fontSize = configuracion.getTamanioLetra();
 
@@ -90,7 +90,7 @@ public class Escritura : MonoBehaviour
 
         InvokeRepeating("Cronometro", 0f, 1f);//inicia el conteo del tiempo, lo vamos a cambiar para iniciarlo cuando se quite la pantalla de tutorial
 
-        //Asignamos en que linea del archivo debería cambiarse el dibujo de fondo, valores hardcodeados por ahora
+        //Asignamos en que linea del archivo deberï¿½a cambiarse el dibujo de fondo, valores hardcodeados por ahora
         lineaImagen[0] = 0;
         lineaImagen[1] = 999;
         lineaImagen[2] = 999;
@@ -99,7 +99,7 @@ public class Escritura : MonoBehaviour
         int contadorLineas = 1;
         foreach (string line in System.IO.File.ReadLines(@"Assets/Textos/" + nivelAJugar + ".txt")) //PlayerPrefs.GetInt("nivelActual")
         {
-            if(line == "\\") //Leemos si la línea tiene solamente la diagonal invertida, en cuyo caso en esa línea se cambia la imagen
+            if(line == "\\") //Leemos si la lï¿½nea tiene solamente la diagonal invertida, en cuyo caso en esa lï¿½nea se cambia la imagen
             {
                 lineaImagen[contadorLineas] = totalLineas;
                 contadorLineas++;
@@ -115,7 +115,7 @@ public class Escritura : MonoBehaviour
     }
     private void SetPalabraActual()
     {
-        //Aqui vemos si ya llegó a la ultima liena y  si no le actualizamos el texto y controlamos si puede o no escribir
+        //Aqui vemos si ya llegï¿½ a la ultima liena y  si no le actualizamos el texto y controlamos si puede o no escribir
 
         if(numLineaActual == totalLineas)
         {
@@ -137,10 +137,11 @@ public class Escritura : MonoBehaviour
             }
             else
             {
-                tiempoPasado = PlayerPrefs.GetInt("tiempoA" + nivelAJugar);
-                aciertosPasados = PlayerPrefs.GetInt("caracteresCorrectosA" + nivelAJugar);
+                tiempoPasado = PlayerPrefs.GetInt("tiempoAudio" + nivelAJugar);
+                aciertosPasados = PlayerPrefs.GetInt("caracteresCorrectosAudio" + nivelAJugar);
                 Debug.Log("tiempo de playerprefs" + tiempoPasado);
                 Debug.Log("aciertos de playerprefs" + aciertosPasados);
+                PlayerPrefs.SetInt("audioCompletado" + nivelAJugar, 1);
             }
             float resultadoAnterior;
             if (tiempoPasado != 0)
@@ -153,16 +154,16 @@ public class Escritura : MonoBehaviour
             {
                 if (!esAudio)
                 {
-                    Debug.Log("Debería guardar resultados");
+                    Debug.Log("Deberï¿½a guardar resultados");
                     PlayerPrefs.SetInt("caracteresCorrectos" + nivelAJugar, aciertos);
                     PlayerPrefs.SetInt("tiempo" + nivelAJugar, tiempo);
                     PlayerPrefs.Save();
                 }
                 else
                 {
-                    Debug.Log("Debería guardar resultados audio");
-                    PlayerPrefs.SetInt("caracteresCorrectosA" + nivelAJugar, aciertos);
-                    PlayerPrefs.SetInt("tiempoA" + nivelAJugar, tiempo);
+                    Debug.Log("Deberï¿½a guardar resultados audio");
+                    PlayerPrefs.SetInt("caracteresCorrectosAudio" + nivelAJugar, aciertos);
+                    PlayerPrefs.SetInt("tiempoAudio" + nivelAJugar, tiempo);
                     PlayerPrefs.Save(); 
                 }
                 
@@ -185,13 +186,13 @@ public class Escritura : MonoBehaviour
         if (numLineaActual == lineaImagen[1])
         {
 
-            //Aquí cambiamos la imagen de fondo por el segundo dibujo, el primer dibujo lo ponemos desde el start
+            //Aquï¿½ cambiamos la imagen de fondo por el segundo dibujo, el primer dibujo lo ponemos desde el start
             Debug.Log("Imagen: Las casas de paja y madera construidas, mientras dos cerditos juegan y el tercero sigue construyendo la casa de ladrillos.");
             imagenFondo.sprite = Ilustraciones[1];
         }
         if (numLineaActual == lineaImagen[2])
         {
-            //Aquí cambiamos la imagen de fondo por el tercer dibujo
+            //Aquï¿½ cambiamos la imagen de fondo por el tercer dibujo
             imagenFondo.sprite = Ilustraciones[2];
             Debug.Log("Imagen: Las casas de paja y madera destruidas, mientras que los tres festejan afuera de la casa de ladrillo, con el lobo desmayado.");
         }
@@ -199,7 +200,7 @@ public class Escritura : MonoBehaviour
 
     private void SetOracionRestante(string palabraActualizada, string palabraAntigua)
     {
-        //Aquí actualizamos lo que se muestra en pantalla
+        //Aquï¿½ actualizamos lo que se muestra en pantalla
         oracionRestante =  palabraActualizada;
         string palabraMostrar = "<color=\"" + colorLetra[0] + "\">" + palabraActualizada + "</color>";
         if (!esAudio)
@@ -215,7 +216,7 @@ public class Escritura : MonoBehaviour
 
     private void Update()
     {
-        //Leemos los valores de configuración para detectar cambios
+        //Leemos los valores de configuraciï¿½n para detectar cambios
         wordOutput.fontSize = configuracion.getTamanioLetra();
         colorLetra = configuracion.getColorLetra();
 
@@ -252,7 +253,7 @@ public class Escritura : MonoBehaviour
 
     private void QuitarLetra()
     {
-        if (errorActual) //Comprobamos si se equivocó en la ultima letra para cambiar el color del texto
+        if (errorActual) //Comprobamos si se equivocï¿½ en la ultima letra para cambiar el color del texto
         {
             erroresSeguidos++;
             oracionPasada += "<color=\"" + colorLetra[1] + "\">" + oracionRestante.Substring(0, 1) + "</color>";
@@ -264,7 +265,7 @@ public class Escritura : MonoBehaviour
             oracionPasada += "<color=\"" + colorLetra[2] + "\">" + oracionRestante.Substring(0, 1) + "</color>";
         }
 
-        //Aquí habría una función para reiniciar el nivel si se superan los errores seguidos, ahorita nomas le decimos que perdió
+        //Aquï¿½ habrï¿½a una funciï¿½n para reiniciar el nivel si se superan los errores seguidos, ahorita nomas le decimos que perdiï¿½
         if (erroresSeguidos > (maxErroresSeguidos/3))
         {
             Debug.Log("Perdiste al chile");
@@ -284,7 +285,7 @@ public class Escritura : MonoBehaviour
     }
 
     IEnumerator Esperar()
-    {   //Esperamos para que se alcance a ver si la última letra de una oración se escribió bien o mal.
+    {   //Esperamos para que se alcance a ver si la ï¿½ltima letra de una oraciï¿½n se escribiï¿½ bien o mal.
         yield return new WaitForSeconds(.3f);
         ActualizarMensaje();
         activo = true;

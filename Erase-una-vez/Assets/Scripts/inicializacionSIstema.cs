@@ -33,6 +33,8 @@ public class inicializacionSIstema : MonoBehaviour
                 // Para los valores booleanos: 1->bloqueado y 0->desbloqueado
                 PlayerPrefs.SetInt("caracteresCorrectos" + numNivel, 0);
                 PlayerPrefs.SetInt("tiempo" + numNivel, 0);
+                PlayerPrefs.SetInt("caracteresCorrectosAudio" + numNivel, 0);
+                PlayerPrefs.SetInt("tiempoAudio" + numNivel, 0);
                 PlayerPrefs.SetInt("estrellas" + numNivel, 0);
                 //Si está en la variante de audio o no
                 PlayerPrefs.SetInt("varianteAudio" + numNivel, 0);
