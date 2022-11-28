@@ -126,16 +126,16 @@ public class Configuracion : MonoBehaviour
 
     public void subirVolumen()
     {
-        if (volumen <= .9f)
-            volumen += .1f;
+        if (volumen <= .98f)
+            volumen += .02f;
         else
             volumen = 1f;
 
     }
     public void bajarVolumen()
     {
-        if (volumen >= .1f)
-            volumen -= .1f;
+        if (volumen >= .02f)
+            volumen -= .02f;
         else
             volumen = 0f;
     }
@@ -149,7 +149,7 @@ public class Configuracion : MonoBehaviour
     }
     public void reducirFuente()
     {
-        if (tamLetra > 25)
+        if (tamLetra > 35)
             tamLetra -= 5;
         else
             tamLetra = 30;

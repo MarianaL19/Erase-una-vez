@@ -132,15 +132,11 @@ public class Escritura : MonoBehaviour
             {
                 tiempoPasado = PlayerPrefs.GetInt("tiempo" + nivelAJugar);
                 aciertosPasados = PlayerPrefs.GetInt("caracteresCorrectos" + nivelAJugar);
-                Debug.Log("tiempo de playerprefs" + tiempoPasado);
-                Debug.Log("aciertos de playerprefs" + aciertosPasados);
             }
             else
             {
                 tiempoPasado = PlayerPrefs.GetInt("tiempoAudio" + nivelAJugar);
                 aciertosPasados = PlayerPrefs.GetInt("caracteresCorrectosAudio" + nivelAJugar);
-                Debug.Log("tiempo de playerprefs" + tiempoPasado);
-                Debug.Log("aciertos de playerprefs" + aciertosPasados);
                 PlayerPrefs.SetInt("audioCompletado" + nivelAJugar, 1);
             }
             float resultadoAnterior;
@@ -154,21 +150,18 @@ public class Escritura : MonoBehaviour
             {
                 if (!esAudio)
                 {
-                    Debug.Log("Deber�a guardar resultados");
                     PlayerPrefs.SetInt("caracteresCorrectos" + nivelAJugar, aciertos);
                     PlayerPrefs.SetInt("tiempo" + nivelAJugar, tiempo);
                     PlayerPrefs.Save();
                 }
                 else
                 {
-                    Debug.Log("Deber�a guardar resultados audio");
                     PlayerPrefs.SetInt("caracteresCorrectosAudio" + nivelAJugar, aciertos);
                     PlayerPrefs.SetInt("tiempoAudio" + nivelAJugar, tiempo);
                     PlayerPrefs.Save(); 
                 }
                 
             }
-
             reporte.GenerarReporte();
             controlPaneles.GanarNivel();
 
@@ -266,7 +259,7 @@ public class Escritura : MonoBehaviour
         }
 
         //Aqu� habr�a una funci�n para reiniciar el nivel si se superan los errores seguidos, ahorita nomas le decimos que perdi�
-        if (erroresSeguidos > (maxErroresSeguidos/3))
+        if (erroresSeguidos > MAX_ERRORES_SEGUIDOS)
         {
             Debug.Log("Perdiste al chile");
             activo = false;
