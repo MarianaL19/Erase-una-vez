@@ -17,8 +17,8 @@ public class Pausa : MonoBehaviour
 
     void Start()
     {
-        panelPausa.enabled = false;
-        panelAjustes.enabled = false;
+        panelPausa.gameObject.SetActive(false);
+        panelAjustes.gameObject.SetActive(false);
         panelVictoria.SetActive(false);
         panelReporte.SetActive(false);
         panelReiniciar.enabled = false;
@@ -35,25 +35,25 @@ public class Pausa : MonoBehaviour
     public void Pausar()
     {
         controlJuego.detenerTiempo();
-        panelPausa.enabled = true;
+        panelPausa.gameObject.SetActive(true);
     }
 
     public void Despausar()
     {
         controlJuego.reanudarTiempo();
-        panelPausa.enabled = false;
+        panelPausa.gameObject.SetActive(false);
     }
 
     public void mostrarAjustes()
     {
-        panelPausa.enabled = false;
-        panelAjustes.enabled = true;
+        panelPausa.gameObject.SetActive(false);
+        panelAjustes.gameObject.SetActive(true);
     }
 
     public void ocultarAjustes()
     {
-        panelPausa.enabled = true;
-        panelAjustes.enabled = false;
+        panelPausa.gameObject.SetActive(true);
+        panelAjustes.gameObject.SetActive(false);
     }
     public void Reiniciar()
     {

@@ -21,7 +21,7 @@ public class Configuracion : MonoBehaviour
     [SerializeField] private Text textoPrueba;
 
 
-    void Start()
+    void Awake()
     {
         colorSet = PlayerPrefs.GetInt("setColor");
         tamLetra = PlayerPrefs.GetInt("sizeTexto");
@@ -142,15 +142,15 @@ public class Configuracion : MonoBehaviour
 
     public void aumentarFuente()
     {
-        if (tamLetra <= 45)
-            tamLetra += 5;
+        if (tamLetra <= 38)
+            tamLetra += 2;
         else
-            tamLetra = 50;
+            tamLetra = 40;
     }
     public void reducirFuente()
     {
-        if (tamLetra > 35)
-            tamLetra -= 5;
+        if (tamLetra > 32)
+            tamLetra -= 2;
         else
             tamLetra = 30;
     }

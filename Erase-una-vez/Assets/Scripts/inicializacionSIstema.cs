@@ -50,7 +50,7 @@ public class inicializacionSIstema : MonoBehaviour
 
             //Variables de ajustes
             PlayerPrefs.SetFloat("volumen", 0.5f);
-            PlayerPrefs.SetInt("sizeTexto", 40);
+            PlayerPrefs.SetInt("sizeTexto", 35);
             PlayerPrefs.SetInt("color", 1);
 
             //Variables de jugador
