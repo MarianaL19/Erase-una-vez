@@ -44,9 +44,16 @@ public class Pausa : MonoBehaviour
         panelPausa.enabled = false;
     }
 
-    public void controlarAjustes()
+    public void mostrarAjustes()
     {
+        panelPausa.enabled = false;
         panelAjustes.enabled = true;
+    }
+
+    public void ocultarAjustes()
+    {
+        panelPausa.enabled = true;
+        panelAjustes.enabled = false;
     }
     public void Reiniciar()
     {

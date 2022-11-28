@@ -20,7 +20,7 @@ public class Escritura : MonoBehaviour
     private bool errorActual;
     private bool jugando;
     private int maxErroresSeguidos;
-    public bool esAudio;
+    private bool esAudio;
 
     private int[] lineaImagen = new int[3];
 
@@ -38,7 +38,7 @@ public class Escritura : MonoBehaviour
     private Sprite[] Ilustraciones = new Sprite[3];
     private AudioClip audioClip;
 
-    public int nivelAJugar;
+    private int nivelAJugar;
 
     void Start()
     {

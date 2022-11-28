@@ -380,7 +380,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1198665093}
         m_TargetAssemblyTypeName: Pausa, Assembly-CSharp
-        m_MethodName: controlarAjustes
+        m_MethodName: mostrarAjustes
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -917,6 +917,18 @@ PrefabInstance:
     - target: {fileID: 799254331373296387, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 799254331373296388, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1198665093}
+    - target: {fileID: 799254331373296388, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ocultarAjustes
+      objectReference: {fileID: 0}
+    - target: {fileID: 799254331373296388, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Pausa, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 799254331373296389, guid: 0643e0f4b1168de4aa26374734187891, type: 3}
       propertyPath: m_AnchoredPosition.x
